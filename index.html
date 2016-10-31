@@ -149,7 +149,7 @@
 			self.exportTagsForCopy = ko.computed(function() {
 				var result = [""];
 				_.forEach(self.exportTags(), function(value) {
-					result.push(value.name);
+					result.push(value.name.toLowerCase());
 				});
 				return result.join(' #');
 			}, this);
