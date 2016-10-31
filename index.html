@@ -201,9 +201,14 @@
 				self.hashtags.valueHasMutated();
 				self.createGroupIsActivated(false);
 			};
+			
+			self.copyTags = function() {
+				$("#tagsforexport").select();
+    				document.execCommand('copy');
+			}
 
 			self.afterRender = function() {
-				$('a[title]').popup();				
+				//$('a[title]').popup();				
 			};
 
 		};
@@ -271,27 +276,12 @@
 			</div>
 		</div>
 
-
-		<div class="ui mini right floated main menu">
-	       <!--
-	        <a class="popup icon item" data-content="Submit Bug Report" href="#"><i class="icon block layout"></i></a>
-        	<a class="popup icon item" data-content="Edit This Page" href="#" data-bind="click : $root.createTag"><i class="icon plus"></i>&nbsp;<i class="icon tag"></i></a>
-	        <a class="popup icon item" data-content="View project on GitHub" href="#"<i class="icon recycle"></i></a>
-	    -->
-	        <a class="popup icon item" data-content="View project on GitHub" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, false); }">
-	        	<i class="icon setting"></i>
-				<i class="dropdown icon"></i>
-	        </a>
-      	</div>
-
 		<span class="ui tiny ribbon label" data-bind="css : $data.color"><i class="icon archive"></i> <span data-bind="text : $data.name"></span> (<span data-bind="text : $data.hashtags().length">0</span>)</span>
 
 		<div>
 	    	<!-- ko foreach: $data.hashtags -->
 			<a class="ui label" data-bind="html: $root.hashtagizer($data.name), click : function() { $root.addTag($data); }, css : $root.setTagClass($data, $parent) "></a>
 			<!-- /ko -->
-			
-<!---->
 			<a class="ui icon label" title="Create new tag" href="#" data-bind="click : $root.createTag"><i class="icon plus"></i></a>
 			<a class="ui icon label" title="Add all tags to selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, true); }"><i class="icon level down"></i></a>
 			<a class="ui icon label" title="Remove all tags from selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, false); }"><i class="icon refresh"></i></a>
@@ -301,55 +291,8 @@
   	</section>
 	<!-- /ko -->
 
-
-
-<!--
-
-		<div class="ui bottom attached menu">
-		<div class="item">
-			<div class="ui mini right action left icon input">
-				<i class="tag icon"></i>
-				<input type="text" placeholder="Skapa tag...">
-				<button class="ui mini basic button">Search</button>
-			</div>
-		</div>
-	</div>
-		<a class="ui small teal label" data-bind="click : $root.createTag">+</a>
-
-		<div class="ui inverted dimmer">
-			<div class="content">
-				<div class="center">
-					<form class="ui form">
-						<div class="field">
-							<input type="text" name="shipping[first-name]" placeholder="Tag Name">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-
-	<div class="ui three top attached mini basic icon buttons">
-		<button class="ui button" data-bind="click : function() { $root.toggleAll($root.tags, true); }"><i class="upload icon"></i> Addera alla</button>
-		<button class="ui button" data-bind="click : function() { $root.toggleAll($root.tags, false); }"><i class="download icon"></i> Radera alla</button>
-		<button class="ui button" data-bind="click : function() { $root.createTag(); }"><i class="plus icon"></i> Lägg till ny</button>
-	</div>
-	
-	<div class="ui three attached mini icon buttons">
-		<button class="ui button" data-bind="click : function() { $root.toggleAll($root.tags, true); }"><i class="upload icon"></i> Addera alla</button>
-		<button class="ui button" data-bind="click : function() { $root.toggleAll($root.tags, false); }"><i class="download icon"></i> Radera alla</button>
-		<button class="ui button" data-bind="click : function() { $root.createTag(); }"><i class="plus icon"></i> Create a new group</button>
-	</div>
-	-->
-
 	<div class="ui bottom attached segment">
 		<span class="ui tiny ribbon green label"><i class="icon tags"></i> Selected hashtags (<span data-bind="text : exportTags().length">0</span>)</span>
-
-		<div class="ui tiny right floated main menu">
-	        <a class="popup icon item" data-content="Submit Bug Report" href="#" data-bind="click : function() { $root.toggleAll($root.tags, true); }"><i class="icon block layout"></i></a>
-        	<a class="popup icon item" data-content="Edit This Page" href="#" data-bind="click : $root.createTag"><i class="icon plus"></i>&nbsp;<i class="icon tag"></i></a>
-	        <a class="popup icon item" data-content="View project on GitHub" href="#" data-bind="click : function() { $root.toggleAll($root.tags, false); }"><i class="icon recycle"></i></a>
-      	</div>
 
       	<!-- ko if: !exportTags().length -->
 			<span><i class="icon idea"></i> No hashtag selected. Click to select</span>
@@ -363,8 +306,8 @@
 		<div class="ui form">
 
 			<div class="ui fluid action input">
-			  <input type="text" data-bind="value: exportTagsForCopy">
-			  <button class="ui teal right labeled icon button">
+			  <input type="text" data-bind="value: exportTagsForCopy" id="tagsforexport">
+			  <button class="ui teal right labeled icon button" data-bind="click: fucntion() { $root.copyTags(); }">
 			    <i class="copy icon"></i>
 			    Copy
 			  </button>
