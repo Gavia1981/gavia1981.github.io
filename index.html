@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<!-- Site Properties -->
-	<title>Tag helper</title>
+	<title>Tags</title>
 	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.css">
 	<style type="text/css">
 	label.disabled { background-color:#eee; }
@@ -24,20 +24,25 @@
 	.hashtaggroup.deletemode .deletemessage { display:block; }
 	.hashtaggroup.deletemode a.label:not(.actionlabel) { border-bottom: 2px solid rgba(154, 4, 4, 0.6) !important; }
 	.hashtaggroup.deletemode a.label:not(.actionlabel):after { content: "\f00d"; font-family: Icons; padding-left:5px; }
+	.hashtaggroup .header { margin: 0 0 5px 0 !important; display:block; }
+	.hashtaggroup.segment { padding: 10px 10px 7px; }
+	.hashtaggroup.folded .tagwrapper,
+	.hashtaggroup.folded .button.actionbutton { display:none; }
+	.emptymessage { display:table; }
 
 	
 
 	.ui.right.floated.menu { position: absolute; top: 5px; right: 1em; }
 
 	html, body {height: 100%;}
-	main { margin-top: 1em; padding-bottom: 300px; }
+	main { padding-bottom: 300px; padding-top: 70px; }
  	#wrap {min-height: 100%;}
- 	footer { position: fixed; bottom: 0; left: 0; right:0; clear:both; background-color:#fff; border-top:1px solid #999; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-
- 	.ui.basic.button.actionbutton { position:absolute; top:5px; right:3px; }
+ 	footer { position: fixed; z-index:100; bottom: 0; left: 0; right:0; clear:both; background-color:#fff; border-top:1px solid #999; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+ 	header { position: fixed; z-index:100; top: 0; left: 0; right:0; clear:both; background-color:#033c5d!important; color:#fff; border-bottom:1px solid #000; box-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
 	</style>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.js"></script>
@@ -59,6 +64,7 @@
 				{
 					name : "Special tags",
 					color: 'blue',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("OlympusOMD"),
 						new self.TAG("em5markii"),
@@ -70,6 +76,7 @@
 				}, {
 					name : "Sweden & Scandinavia",
 					color: 'teal',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("Sweden"),
 						new self.TAG("Sverige"),
@@ -86,6 +93,7 @@
 				}, {
 					name : "Landscape & Nature",
 					color: 'green',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("Landscape_Lovers"),
 						new self.TAG("Landscape_Captures"),
@@ -119,6 +127,7 @@
 				},{
 					name : "Trees",
 					color: 'olive',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("Tree_Captures"),
 						new self.TAG("Pocket_Trees")
@@ -126,6 +135,7 @@
 				},{
 					name : "Astrophotography",
 					color: 'black',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("NightScape"),
 						new self.TAG("NightPhotography"),
@@ -143,8 +153,18 @@
 						new self.TAG("WorldBest_Sky")
 					])
 				}, {
+					name : "Norrsken",
+					color: 'blue',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("NorthernLights"),
+						new self.TAG("AuroraBorealis"),
+						new self.TAG("Norrsken")
+					])
+				}, {
 					name : "Popular",
 					color: 'orange',
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("WatchThisInstagood"),
 						new self.TAG("LiveFolk"),
@@ -185,7 +205,7 @@
 			self.toggleAll = function(arrayRef, parent, state) {
 				_.forEach(arrayRef(), function(value) {
 					if (state) {
-						self.addTag(value, parent);
+						self.tagAction(value, parent);
 					} else {
 						self.removeTag(value);
 					}
@@ -217,9 +237,14 @@
 			self.deleteModeActivated = ko.observable(false);
 			self.deleteTagsInGroupName = ko.observable('');
 
-			self.addTag = function(tag, parent) {
+			self.tagAction = function(tag, parent) {
 				if (parent.name === self.deleteTagsInGroupName()) {
 					parent.hashtags(_.without(parent.hashtags(), tag));
+					if (!parent.hashtags().length) {
+						self.deleteModeActivated(false);
+						self.deleteTagsInGroupName('');
+						$(".hashtaggroup.deletemode").removeClass("deletemode");
+					}
 					return false;
 				}
 				if (_.indexOf(self.exportTags(), tag) === -1) {
@@ -255,6 +280,10 @@
 				self.createGroupIsActivated(true);
 			};
 
+			self.foldGroup = function(item, event) {
+				item.isFolded(!item.isFolded());
+			};
+
 			self.setTagClass = function(item, parent) {
 				if (item.isActive()) {
 					return 'basic disabled';
@@ -263,14 +292,19 @@
 				}
 			}
 
+			self.toggleAllGroups = function() {
+				_.forEach(self.hashtags(), function(value) {
+					value.isFolded(!value.isFolded());
+				});
+			};
+
 			self.saveNewGroup = function() {
-				console.log(self.hashtags());
 				self.hashtags().push({
 					name : $("#groupName").val(),
 					color : $("#color").val(),
+					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([])
 				});
-				console.log(self.hashtags());
 				self.hashtags.valueHasMutated();
 				self.createGroupIsActivated(false);
 			};
@@ -292,6 +326,7 @@
 
 			self.afterRender = function() {
 				self.runJQScripts(document.body);
+				new Clipboard('#copy-button');
 			};
 		};
 
@@ -310,13 +345,12 @@
 <body>
 <div id="wrap">
 
-	<main class="ui container">
-
-		<div class="ui top attached custom inverted segment">	
+	<header>
+		<div class="ui custom inverted segment">	
 			<div class="ui grid">
 				<div class="eleven wide column">
 					<h2 class="ui icon">
-					  	<i class="icon instagram"></i> Tag helper
+					  	<i class="icon instagram"></i> Instatags
 					</h2>
 				</div>
 				<div class="five wide column">
@@ -324,6 +358,9 @@
 				</div>
 			</div>
 		</div>
+	</header>
+
+	<main class="ui container">
 
 		<div class="ui attached message info" data-bind="visible : createGroupIsActivated()">
 			<h3>Create a new hashtag group</h3>
@@ -356,8 +393,27 @@
 			</div>
 		</div>
 
+	<section class="ui top attached segments">
 		<!-- ko foreach: hashtags -->
-		<section class="ui attached segment hashtaggroup">
+		<!--+ $data.color -->
+		<section class="ui hashtaggroup" data-bind="css : ' segment ' + ($data.isFolded() ? 'folded' : '')">
+
+			<div class="ui right floated right pointing dropdown icon button mini basic actionbutton">
+	        	<i class="icon setting"></i>
+				<i class="dropdown icon"></i>
+		        
+		        <div class="menu vertical hidden">
+			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
+			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
+			  	</div>
+	      	</div>
+
+			<a href="#" class="header" data-bind="css : $data.color, click : $root.foldGroup">
+				<!--<i class="icon archive" data-bind="css : $data.color"></i>-->
+				<i class="icon square" data-bind="css : $data.isFolded() ? 'add' : 'minus'"></i>
+				<strong data-bind="text : $data.name"></strong> 
+				(<span data-bind="text : $data.hashtags().length">0</span>) 
+			</a>
 
 			<div class="ui inverted dimmer">
 				<div class="content">
@@ -379,6 +435,7 @@
 				</div>
 			</div>
 
+			<!--
 			<div class="ui right pointing dropdown icon button mini basic actionbutton">
 	        	<i class="icon setting"></i>
 				<i class="dropdown icon"></i>
@@ -388,16 +445,21 @@
 			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
 			  	</div>
 	      	</div>
+	      -->
 
-			<span class="ui tiny ribbon label" data-bind="css : $data.color"><i class="icon archive"></i> <span data-bind="text : $data.name"></span> (<span data-bind="text : $data.hashtags().length">0</span>)</span>
-
-			<div>
+			<div class="tagwrapper">
 		    	<!-- ko foreach: $data.hashtags -->
-				<a class="ui label" data-bind="html: $root.hashtagizer($data.name), click : function() { $root.addTag($data, $parent); }, css : $root.setTagClass($data, $parent) "></a>
+				<a class="ui label" data-bind="html: $root.hashtagizer($data.name), click : function() { $root.tagAction($data, $parent); }, css : $root.setTagClass($data, $parent) "></a>
 				<!-- /ko -->
-				<a class="ui icon label actionlabel" title="Create new tag" href="#" data-bind="click : $root.showCreateTagForm"><i class="icon plus"></i></a>
-				<a class="ui icon label actionlabel" title="Add all tags to selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, true); }"><i class="icon sort content ascending"></i></a>
-				<a class="ui icon label actionlabel" title="Remove all tags from selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, false); }"><i class="icon recycle"></i></a>
+				<!-- ko if: !$data.hashtags().length -->
+				<div class="ui mini success message emptymessage">
+				  	<i class="icon idea"></i>
+				  	No tags in this group yet. Start creating tags by clicking the button with a plus sign below.
+				</div>
+				<!-- /ko -->
+				<a class="ui icon basic label actionlabel" title="Create new tag" href="#" data-bind="click : $root.showCreateTagForm"><i class="icon plus"></i></a>
+				<a class="ui icon basic label actionlabel" title="Add all tags to selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, true); }"><i class="icon sort content ascending"></i></a>
+				<a class="ui icon basic label actionlabel" title="Remove all tags from selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, false); }"><i class="icon recycle"></i></a>
 			</div>
 
 			<div class="ui negative message deletemessage">
@@ -406,35 +468,54 @@
 		    </div>
 
 	  	</section>
+
 		<!-- /ko -->
+
+		<div class="ui mini basic one bottom attached buttons">
+			<a href="#" data-bind="click: $root.toggleAllGroups" class="ui mini icon button">
+				<i class="icon retweet"></i>
+				Toggle all groups
+			</a>
+		</div>
+	</section>
+
+
 
 	</main>
 
 </div>
 
 <footer>
-	<div class="ui container">
-		<div class="ui basic segment">
-			<h5><i class="icon tags"></i> Selected hashtags (<b data-bind="text : exportTags().length">0</b>)</h5>
+	<div class="ui basic segment">
+		<h5><i class="icon tags"></i> Selected hashtags (<b data-bind="text : exportTags().length">0</b>)</h5>
 
-			<div class="ui mini right floated main menu">
-		        <a class="popup icon item" data-content="Submit Bug Report" href="#" data-bind="click : function() { $root.sortExportTags(); }"><i class="icon sort alphabet ascending"></i></a>
-		        <a class="popup icon item" data-content="View project on GitHub" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon trash"></i></a>
+		<div class="ui mini right floated main menu">
+	        <a class="popup icon item" href="#" data-bind="click : function() { $root.sortExportTags(); }"><i class="icon sort alphabet ascending"></i></a>
+	        <a class="popup icon item" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon trash"></i></a>
+	        <a class="popup icon item" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon save"></i></a>
+	        <div class="ui right bottom pointing dropdown link item">
+	        	<i class="icon archive"></i>
+				<i class="dropdown icon"></i>
+		        
+		        <div class="menu vertical hidden">
+			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
+			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
+			  	</div>
 	      	</div>
+      	</div>
 
-	      	<div style="max-height: 150px; overflow: auto; margin-bottom:10px;">
-				<!-- ko foreach: exportTags -->
-				<a class="ui blue label export" data-bind="html: $root.hashtagizer($data.name) + ' <i class=\'icon close\'></i>', click : function() { $root.removeTag($data); }"></a>
-				<!-- /ko -->
-			</div>
+      	<div style="max-height: 150px; overflow: auto; margin-bottom:10px;">
+			<!-- ko foreach: exportTags -->
+			<a class="ui blue label export" data-bind="html: $root.hashtagizer($data.name) + ' <i class=\'icon close\'></i>', click : function() { $root.removeTag($data); }"></a>
+			<!-- /ko -->
+		</div>
 
-			<div class="ui form">
-				<div class="ui fluid action input">
-				  <input type="text" data-bind="value: exportTagsForCopy">
-				  <button class="ui teal icon button">
-				    <i class="copy icon"></i>
-				  </button>
-				</div>
+		<div class="ui form">
+			<div class="ui fluid action input">
+			  	<input type="text" data-bind="value: exportTagsForCopy" id="tagsforexport">
+			  	<button id="copy-button" class="ui teal icon button" data-clipboard-target="#tagsforexport">
+			    	<i class="copy icon"></i>
+			 	</button>
 			</div>
 		</div>
 	</div>
