@@ -6,6 +6,8 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">		
+   	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 	<!-- Site Properties -->
 	<title>Tags</title>
@@ -14,16 +16,19 @@
 	label.disabled { background-color:#eee; }
 	.ui.label.blue.export { background-color:#006f88 !important; }
 	.ui.ribbon.label { top: -0.5em; margin-bottom:5px; }
-	.ui.inverted.custom.segment { background-color: #033c5d!important; color: #FFF!important; }
+	.ui.inverted.custom.segment { background-color: #033c5d!important; color: #FFF!important; padding: 0.6em 1em; }
 	.ui.inverted.dimmer { background-color: rgba(255,255,255,1); }
 
 	.ui.label.icon>.icon { width: auto; margin: 0; }
 	a.ui.label { margin: 0 2px 4px 0; }
 
+	.hashtaggroup .movemessage,
 	.hashtaggroup .deletemessage { display:none; }
+	.hashtaggroup.movemode .movemessage,
 	.hashtaggroup.deletemode .deletemessage { display:block; }
 	.hashtaggroup.deletemode a.label:not(.actionlabel) { border-bottom: 2px solid rgba(154, 4, 4, 0.6) !important; }
 	.hashtaggroup.deletemode a.label:not(.actionlabel):after { content: "\f00d"; font-family: Icons; padding-left:5px; }
+	.hashtaggroup.movemode a.label:not(.actionlabel):after { content: "\f047"; font-family: Icons; padding-left:5px; }
 	.hashtaggroup .header { margin: 0 0 5px 0 !important; display:block; }
 	.hashtaggroup.segment { padding: 10px 10px 7px; }
 	.hashtaggroup.folded .tagwrapper,
@@ -35,7 +40,7 @@
 	.ui.right.floated.menu { position: absolute; top: 5px; right: 1em; }
 
 	html, body {height: 100%;}
-	main { padding-bottom: 300px; padding-top: 70px; }
+	main { padding-bottom: 300px; padding-top: 50px; }
  	#wrap {min-height: 100%;}
  	footer { position: fixed; z-index:100; bottom: 0; left: 0; right:0; clear:both; background-color:#fff; border-top:1px solid #999; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
  	header { position: fixed; z-index:100; top: 0; left: 0; right:0; clear:both; background-color:#033c5d!important; color:#fff; border-bottom:1px solid #000; box-shadow: 0 0 10px rgba(0,0,0,0.8); }
@@ -45,12 +50,20 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js" integrity="sha256-gaGobNk1cPaj0abcVmyZxUYgCPsueCJwN5i4DjC4BS0=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		var mockViewmodel = function() {
 
 			var self = this;
+
+			self.debugMode = ko.observable(true);
+			self.log = function(message) {
+				if (self.debugMode()) {
+					console.log(message);
+				}
+			};
 
 			self.colorArray = ["red","orange","yellow","olive","green","teal","blue","violet","purple","pink","brown","grey","black"]
 
@@ -60,8 +73,7 @@
 				this.isActive = ko.observable(false);
 			};
 
-			self.hashtags = ko.observableArray([
-				{
+			self.storedTags = [{
 					name : "Special tags",
 					color: 'blue',
 					isFolded : ko.observable(false),
@@ -191,7 +203,49 @@
 						new self.TAG("Incredible_Shot")
 					])
 				}
-			]);
+			];
+
+			// This holds the hashtags
+			self.hashtags = ko.observableArray([]);
+
+			// Map objects from JSON and set knockout observables
+			self.getStorage = function() {
+				self.log("self.getStorage();");
+				var fromJSON = JSON.parse(localStorage.getItem("hashtags"));
+				// Map back to objects with observable
+				_.forEach(fromJSON, function(item) {
+					item.isFolded = ko.observable(item.isFolded);
+					_.forEach(item.hashtags, function(hashtagItem) {
+						hashtagItem.isActive = ko.observable(item.isActive);
+					});
+					item.hashtags = ko.observableArray(item.hashtags);
+				});
+				self.hashtags(fromJSON);
+				self.hashtags.valueHasMutated();
+			};
+
+			// Store hashtags as JSON
+			self.setStorage = function() {
+				self.log("self.setStorage();");
+				localStorage.setItem("hashtags", ko.toJSON(ko.mapping.toJS(self.hashtags)));
+			};
+
+			self.setStoredTags = function() {
+				self.log("self.setStoredTags();");
+				self.hashtags(self.storedTags);
+			};
+
+			self.initHashtags = function() {
+				self.log("self.initHashtags();");
+				if (localStorage.getItem("hashtags") !== "null") {
+					self.getStorage();
+				} else {
+					self.setStoredTags();
+				}
+			};
+
+			// Set hashtags from localstorage or from storedTags?
+			self.initHashtags();
 
 			self.hashtagizer = function(tag) {
 				return '#' + tag;
@@ -200,7 +254,6 @@
 			self.capitalize = function(stringInput) {
 				return stringInput.charAt(0).toUpperCase() + stringInput.slice(1);
 			};
-
 
 			self.toggleAll = function(arrayRef, parent, state) {
 				_.forEach(arrayRef(), function(value) {
@@ -214,11 +267,16 @@
 
 			self.exportTags = ko.observableArray([]);
 			self.exportTagsForCopy = ko.computed(function() {
-				var result = [""];
+				var result = [];
+				var cnt = 0;
 				_.forEach(self.exportTags(), function(value) {
-					result.push(value.name.toLowerCase());
+					result.push(self.hashtagizer(value.name.toLowerCase()) + ' ');
+					cnt++;
+					if (cnt % 2 === 0) {
+						result.push('\n');
+					}
 				});
-				return result.join(' #');
+				return result.join('');
 			}, this);
 
 			self.removeAllExportTags = function() {
@@ -236,27 +294,32 @@
 
 			self.deleteModeActivated = ko.observable(false);
 			self.deleteTagsInGroupName = ko.observable('');
+			self.activeHashtagGroup = ko.observable(null);
 
 			self.tagAction = function(tag, parent) {
-				if (parent.name === self.deleteTagsInGroupName()) {
+				if (parent.name === self.deleteTagsInGroupName() && self.deleteModeActivated()) {
 					parent.hashtags(_.without(parent.hashtags(), tag));
 					if (!parent.hashtags().length) {
 						self.deleteModeActivated(false);
 						self.deleteTagsInGroupName('');
 						$(".hashtaggroup.deletemode").removeClass("deletemode");
 					}
+					self.setStorage();
 					return false;
 				}
 				if (_.indexOf(self.exportTags(), tag) === -1) {
 					tag.isActive(true);
-					self.exportTags().push(tag);
-					self.exportTags(_.uniqBy(self.exportTags(), 'name'));
-					self.exportTags.valueHasMutated();
-					//self.tags.valueHasMutated();
+					if (!self.moveModeActivated()) {
+						self.exportTags().push(tag);
+						self.exportTags(_.uniqBy(self.exportTags(), 'name'));
+						self.exportTags.valueHasMutated();
+						self.setStorage();
+					}
 				}
 			}
 
 			self.removeTag = function(tag) {
+				self.log("self.removeTag ();");
 				tag.isActive(false);
 				self.exportTags(_.without(self.exportTags(), tag));
 				self.exportTags.valueHasMutated();
@@ -281,7 +344,28 @@
 			};
 
 			self.foldGroup = function(item, event) {
-				item.isFolded(!item.isFolded());
+				if (self.moveModeActivated() && !_.isEqual(item, self.activeHashtagGroup())) {
+					var pullArray = [];
+					_.forEach(self.activeHashtagGroup().hashtags(), function(value) {
+						if (value.isActive()) {
+							value.isActive(false);
+							pullArray.push(value);
+						};
+					});
+
+					// Remove pulled items from active group
+					self.activeHashtagGroup().hashtags(_.pullAllWith(self.activeHashtagGroup().hashtags(), pullArray));
+
+					// Union pulled item with new group
+					item.hashtags(_.union(item.hashtags(), pullArray));
+
+					self.moveModeActivated(false);
+					self.activeHashtagGroup(null);
+					$(".hashtaggroup.movemode").removeClass("movemode");
+
+				} else {
+					item.isFolded(!item.isFolded());
+				}
 			};
 
 			self.setTagClass = function(item, parent) {
@@ -311,11 +395,21 @@
 
 			self.deleteGroup = function(item, event) {
 				self.hashtags(_.without(self.hashtags(), item));
+				self.setStorage();
 			};
+
+			self.moveModeActivated = ko.observable(false);
+			self.toggleMoveMode = function(item, event) {
+				self.moveModeActivated(!self.moveModeActivated());
+				self.deleteTagsInGroupName(self.moveModeActivated() ? item.name : '');
+				self.activeHashtagGroup(item);
+				$(event.target).closest(".hashtaggroup").toggleClass("movemode", self.moveModeActivated());
+			}
 
 			self.toggleDeleteMode = function(item, event) {
 				self.deleteModeActivated(!self.deleteModeActivated());
 				self.deleteTagsInGroupName(self.deleteModeActivated() ? item.name : '');
+				self.activeHashtagGroup(item);
 				$(event.target).closest(".hashtaggroup").toggleClass("deletemode", self.deleteModeActivated());
 			}
 
@@ -337,7 +431,7 @@
 
 	    setTimeout(function() {
 	    	window.mockViewmodel.afterRender();
-	    }, 1500);
+	    }, 700);
 
 	});
 	</script>
@@ -404,6 +498,7 @@
 		        
 		        <div class="menu vertical hidden">
 			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
+			    	<a class="item" href="#" data-bind="click: $root.toggleMoveMode"><i class="icon move"></i> Move tags</a>
 			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
 			  	</div>
 	      	</div>
@@ -467,6 +562,11 @@
 		      	<div class="header"><i class="icon mouse pointer"></i> Click on the hashtags above that you want to delete | <a href="#" data-bind="click: $root.toggleDeleteMode">Cancel</a></div>
 		    </div>
 
+		    <div class="ui info message movemessage">
+				<i class="icon close" data-bind="click: $root.toggleMoveMode"></i>
+		      	<div class="header"><i class="icon mouse pointer"></i> Click on the hashtags above that you want to move | <a href="#" data-bind="click: $root.toggleMoveMode">Cancel</a></div>
+		    </div>
+
 	  	</section>
 
 		<!-- /ko -->
@@ -498,6 +598,7 @@
 				<i class="dropdown icon"></i>
 		        
 		        <div class="menu vertical hidden">
+		        	<a class="item" href="#" data-bind="click: $root.setStoredTags"><i class="icon recycle"></i> Start from scratch</a>
 			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
 			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
 			  	</div>
@@ -512,7 +613,7 @@
 
 		<div class="ui form">
 			<div class="ui fluid action input">
-			  	<input type="text" data-bind="value: exportTagsForCopy" id="tagsforexport">
+			  	<textarea data-bind="value: exportTagsForCopy" id="tagsforexport" rows="1"></textarea>
 			  	<button id="copy-button" class="ui teal icon button" data-clipboard-target="#tagsforexport">
 			    	<i class="copy icon"></i>
 			 	</button>
@@ -522,4 +623,3 @@
 </footer>
 </body>
 </html>
-
