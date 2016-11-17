@@ -34,10 +34,11 @@
 	.hashtaggroup.folded .tagwrapper,
 	.hashtaggroup.folded .button.actionbutton { display:none; }
 	.emptymessage { display:table; }
+	.ui.menu .item>i.dropdown.icon { margin:0; }
 
 	
 
-	.ui.right.floated.menu { position: absolute; top: 5px; right: 1em; }
+	.ui.right.floated.menu { position: absolute; top: 5px; right: 15px; }
 
 	html, body {height: 100%;}
 	main { padding-bottom: 300px; padding-top: 50px; }
@@ -83,7 +84,22 @@
 						new self.TAG("OmdEm5MarkII"),
 						new self.TAG("Olympus"),
 						new self.TAG("OlympusCamera"),
-						new self.TAG("All_My_Own")
+						new self.TAG("OlympusSverige"),
+						new self.TAG("ig_Mirrorless"),
+						new self.TAG("All_My_Own"),
+						new self.TAG("ig_MyShot"),
+						new self.TAG("TV_Monotones")
+					])
+				}, {
+					name : "Uppsala",
+					color: 'teal',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("MyUppsala"),
+						new self.TAG("Uppsala"),
+						new self.TAG("UppsalaCity"),
+						new self.TAG("alltljuspåuppsala"),
+						new self.TAG("alltljuspåuppsala2016")
 					])
 				}, {
 					name : "Sweden & Scandinavia",
@@ -100,7 +116,12 @@
 						new self.TAG("Sweden_PhotoLovers"),
 						new self.TAG("BestOfScandinavia"),
 						new self.TAG("igScandinavia"),
-						new self.TAG("wu_Sweden")
+						new self.TAG("wu_Sweden"),
+						new self.TAG("iAmNordic"),
+						new self.TAG("OnlyInScandinavia"),
+						new self.TAG("UnlimitedScandinavia"),
+						new self.TAG("TheBestOfScandinavia"),
+						new self.TAG("Schweden")
 					])
 				}, {
 					name : "Landscape & Nature",
@@ -114,12 +135,14 @@
 						new self.TAG("NatureGram"),
 						new self.TAG("Nature_Perfection"),
 						new self.TAG("Nature_Brilliance"),
+						new self.TAG("BestNatureShots "),
 						new self.TAG("HeartNature"),
 						new self.TAG("InstaNatureFriends"),
 						new self.TAG("MotherNature"),
 						new self.TAG("FiftyShades_Of_Nature"),
 						new self.TAG("AllNatureShots"),
-						new self.TAG("reflection_perfection"),
+						new self.TAG("AllWhatsBeautiful"),
+						new self.TAG("Reflection_Perfection"),
 						new self.TAG("Country_Features"),
 						new self.TAG("ig_Countryside"),
 						new self.TAG("AwesomeEarth"),
@@ -134,7 +157,17 @@
 						new self.TAG("NatureAddict"),
 						new self.TAG("NatureOnly"),
 						new self.TAG("Nature_Shooters"),
-						new self.TAG("Natureza")
+						new self.TAG("Natureza"),
+						new self.TAG("Loves_Reflections"),
+						new self.TAG("BNS_Reflection"),
+						new self.TAG("IC_Reflections"),
+						new self.TAG("CloudPorn"),
+						new self.TAG("EarthDeluxe"),
+						new self.TAG("FantasticEarth"),
+						new self.TAG("Pocket_AllNature"),
+						new self.TAG("FineArtNature"),
+						new self.TAG("Reflectiongram"),
+						new self.TAG("Wonderful_Places")
 					])
 				},{
 					name : "Trees",
@@ -142,45 +175,22 @@
 					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
 						new self.TAG("Tree_Captures"),
-						new self.TAG("Pocket_Trees")
-					])
-				},{
-					name : "Astrophotography",
-					color: 'black',
-					isFolded : ko.observable(false),
-					hashtags : ko.observableArray([
-						new self.TAG("NightScape"),
-						new self.TAG("NightPhotography"),
-						new self.TAG("NightScaper"),
-						new self.TAG("LongexpoElite"),
-						new self.TAG("AstroPhotography"),
-						new self.TAG("StarryNight"),
-						new self.TAG("NightShooters"),
-						new self.TAG("SkyMasters"),
-						new self.TAG("MilkyWay"),
-						new self.TAG("Stargazer"),
-						new self.TAG("InstaSky"),
-						new self.TAG("Sky_Brilliance"),
-						new self.TAG("SkyMasters_Family"),
-						new self.TAG("WorldBest_Sky")
-					])
-				}, {
-					name : "Norrsken",
-					color: 'blue',
-					isFolded : ko.observable(false),
-					hashtags : ko.observableArray([
-						new self.TAG("NorthernLights"),
-						new self.TAG("AuroraBorealis"),
-						new self.TAG("Norrsken")
+						new self.TAG("Pocket_Trees"),
+						new self.TAG("BNS_Trees"),
+						new self.TAG("TreeScape"),
+						new self.TAG("Trees")
 					])
 				}, {
 					name : "Popular",
 					color: 'orange',
 					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
+						new self.TAG("VSCO"),
 						new self.TAG("WatchThisInstagood"),
 						new self.TAG("LiveFolk"),
 						new self.TAG("ArtOfVisuals"),
+						new self.TAG("VisualsOfLife"),
+						new self.TAG("VisualsCollective"),
 						new self.TAG("LiveAuthentic"),
 						new self.TAG("WeLiveToExplore"),
 						new self.TAG("MoodyGrams"),
@@ -200,10 +210,91 @@
 						new self.TAG("igWorld_Global"),
 						new self.TAG("Superb_Photos"),
 						new self.TAG("OurMoodyDays"),
-						new self.TAG("Incredible_Shot")
+						new self.TAG("Incredible_Shot"),
+						new self.TAG("IgersMood"),
+						new self.TAG("ShotzDelight"),
+						new self.TAG("FotoCatchers"),
+						new self.TAG("Hubs_United"),
+						new self.TAG("ig_MasterPiece"),
+						new self.TAG("GreatNorthCollective")
+					])
+				}, {
+					name : "Norrsken",
+					color: 'red',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("NorthernLights"),
+						new self.TAG("AuroraBorealis"),
+						new self.TAG("Aurora"),
+						new self.TAG("Norrsken"),
+						new self.TAG("WorldAurora"),
+						new self.TAG("AuroraBorealBlog")
+					])
+				}, {
+					name : "Astrophotography",
+					color: 'black',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("NightScape"),
+						new self.TAG("NightPhotography"),
+						new self.TAG("NightScaper"),
+						new self.TAG("LongexpoElite"),
+						new self.TAG("AstroPhotography"),
+						new self.TAG("StarryNight"),
+						new self.TAG("NightShooters"),
+						new self.TAG("SkyMasters"),
+						new self.TAG("Sky_Brilliance"),
+						new self.TAG("SkyMasters_Family"),
+						new self.TAG("MilkyWay"),
+						new self.TAG("Stargazer"),
+						new self.TAG("InstaSky"),
+						new self.TAG("AstroScape"),
+						new self.TAG("Pocket_Sky"),
+						new self.TAG("Long_Exposure"),
+						new self.TAG("Long_Exposure_Pics"),
+						new self.TAG("World_BestSky"),
+						new self.TAG("NightImages"),
+						new self.TAG("igWorldClub_Longexp"),
+						new self.TAG("LongExpo_Addiction"),
+						new self.TAG("LongExposurePhotography"),
+						new self.TAG("LazyShutters"),
+						new self.TAG("ShutterSpeec"),
+						new self.TAG("LowLight")
+					])
+				},{
+					name : "Winter",
+					color: 'grey',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("Frozen"),
+						new self.TAG("Pocket_Frozen"),
+						new self.TAG("InstaWinter"),
+						new self.TAG("PrayForSnow"),
+						new self.TAG("SnowPerfection"),
+						new self.TAG("Snow"),
+						new self.TAG("WinterTime")
+
+					])
+				},{
+					name : "Lighthouse & Sea",
+					color: 'grey',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("Pocket_Waters"),
+						new self.TAG("SeaScape"),
+						new self.TAG("Lighthouse"),
+						new self.TAG("Lighthouse_Captures"),
+						new self.TAG("Lighthouses_Windmills_gs")
 					])
 				}
 			];
+
+			self.runJQScripts = function(context, delay) {
+				setTimeout(function() {
+					$('a[title]', $(context)).popup({silent: true});
+					$('.ui.dropdown', $(context)).dropdown({silent: true});
+				}, delay);
+			};
 
 			// This holds the hashtags
 			self.hashtags = ko.observableArray([]);
@@ -222,6 +313,7 @@
 				});
 				self.hashtags(fromJSON);
 				self.hashtags.valueHasMutated();
+				self.runJQScripts("section.segments", 200);
 			};
 
 			// Store hashtags as JSON
@@ -233,6 +325,7 @@
 			self.setStoredTags = function() {
 				self.log("self.setStoredTags();");
 				self.hashtags(self.storedTags);
+				self.runJQScripts("section.segments", 200);
 			};
 
 			self.initHashtags = function() {
@@ -278,6 +371,18 @@
 				});
 				return result.join('');
 			}, this);
+
+			self.saveExportTags = function() {
+				var saveTags = ko.toJSON(ko.mapping.toJS(self.exportTags));
+				var itemToSave = {
+					date : new Date(),
+					name : "test",
+					hashtags : saveTags
+				};
+				console.log(itemToSave);
+				$('footer .segment').dimmer('show').find(":input:text").focus();
+				console.log(saveTags);
+			};
 
 			self.removeAllExportTags = function() {
 				_.forEach(self.exportTags(), function(value) {
@@ -353,16 +458,11 @@
 						};
 					});
 
-					// Remove pulled items from active group
+					// Remove pulled items from active group and union pulled item with target group
 					self.activeHashtagGroup().hashtags(_.pullAllWith(self.activeHashtagGroup().hashtags(), pullArray));
-
-					// Union pulled item with new group
 					item.hashtags(_.union(item.hashtags(), pullArray));
 
-					self.moveModeActivated(false);
-					self.activeHashtagGroup(null);
-					$(".hashtaggroup.movemode").removeClass("movemode");
-
+					self.toggleMoveMode(item);
 				} else {
 					item.isFolded(!item.isFolded());
 				}
@@ -376,9 +476,11 @@
 				}
 			}
 
+			self.isAllGroupToggled = ko.observable(false);
 			self.toggleAllGroups = function() {
+				self.isAllGroupToggled(!self.isAllGroupToggled());
 				_.forEach(self.hashtags(), function(value) {
-					value.isFolded(!value.isFolded());
+					value.isFolded(self.isAllGroupToggled());
 				});
 			};
 
@@ -402,8 +504,13 @@
 			self.toggleMoveMode = function(item, event) {
 				self.moveModeActivated(!self.moveModeActivated());
 				self.deleteTagsInGroupName(self.moveModeActivated() ? item.name : '');
-				self.activeHashtagGroup(item);
-				$(event.target).closest(".hashtaggroup").toggleClass("movemode", self.moveModeActivated());
+				self.activeHashtagGroup(self.moveModeActivated() ? item : null);
+				if (self.moveModeActivated()) {
+					$(event.target).closest(".hashtaggroup").addClass("movemode");
+				} else {
+					$(".hashtaggroup.movemode").removeClass("movemode");
+				}
+				
 			}
 
 			self.toggleDeleteMode = function(item, event) {
@@ -413,13 +520,8 @@
 				$(event.target).closest(".hashtaggroup").toggleClass("deletemode", self.deleteModeActivated());
 			}
 
-			self.runJQScripts = function(context) {
-				$('a[title]', $(context)).popup({silent: true});
-				$('.ui.dropdown', $(context)).dropdown({silent: true});
-			};
-
 			self.afterRender = function() {
-				self.runJQScripts(document.body);
+				self.runJQScripts(document.body, 1000);
 				new Clipboard('#copy-button');
 			};
 		};
@@ -488,8 +590,20 @@
 		</div>
 
 	<section class="ui top attached segments">
+		<!--
+		<div class="ui mini basic two top attached buttons">
+			<a href="#" data-bind="click: $root.toggleAllGroups" class="ui mini icon button">
+				<i class="icon retweet"></i>
+				Toggle all groups
+			</a>
+			<a href="#" data-bind="click: $root.toggleAllGroups" class="ui mini icon button">
+				<i class="icon retweet"></i>
+				Toggle all groups
+			</a>
+		</div>
+		-->
+
 		<!-- ko foreach: hashtags -->
-		<!--+ $data.color -->
 		<section class="ui hashtaggroup" data-bind="css : ' segment ' + ($data.isFolded() ? 'folded' : '')">
 
 			<div class="ui right floated right pointing dropdown icon button mini basic actionbutton">
@@ -530,18 +644,6 @@
 				</div>
 			</div>
 
-			<!--
-			<div class="ui right pointing dropdown icon button mini basic actionbutton">
-	        	<i class="icon setting"></i>
-				<i class="dropdown icon"></i>
-		        
-		        <div class="menu vertical hidden">
-			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
-			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
-			  	</div>
-	      	</div>
-	      -->
-
 			<div class="tagwrapper">
 		    	<!-- ko foreach: $data.hashtags -->
 				<a class="ui label" data-bind="html: $root.hashtagizer($data.name), click : function() { $root.tagAction($data, $parent); }, css : $root.setTagClass($data, $parent) "></a>
@@ -554,7 +656,7 @@
 				<!-- /ko -->
 				<a class="ui icon basic label actionlabel" title="Create new tag" href="#" data-bind="click : $root.showCreateTagForm"><i class="icon plus"></i></a>
 				<a class="ui icon basic label actionlabel" title="Add all tags to selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, true); }"><i class="icon sort content ascending"></i></a>
-				<a class="ui icon basic label actionlabel" title="Remove all tags from selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, false); }"><i class="icon recycle"></i></a>
+				<a class="ui icon basic label actionlabel" title="Remove all tags from selected" href="#" data-bind="click : function() { $root.toggleAll($data.hashtags, $parent, false); }"><i class="icon reply all"></i></a>
 			</div>
 
 			<div class="ui negative message deletemessage">
@@ -564,11 +666,12 @@
 
 		    <div class="ui info message movemessage">
 				<i class="icon close" data-bind="click: $root.toggleMoveMode"></i>
-		      	<div class="header"><i class="icon mouse pointer"></i> Click on the hashtags above that you want to move | <a href="#" data-bind="click: $root.toggleMoveMode">Cancel</a></div>
+				<div class="header">Move hashtags between groups | <a href="#" data-bind="click: $root.toggleMoveMode">Cancel</a></div>
+				<i class="icon mouse pointer"></i> Select tags by clicking<br>
+				<i class="icon folder open"></i> Click on a group title to move hashtags to that group<br>
 		    </div>
 
 	  	</section>
-
 		<!-- /ko -->
 
 		<div class="ui mini basic one bottom attached buttons">
@@ -591,15 +694,14 @@
 
 		<div class="ui mini right floated main menu">
 	        <a class="popup icon item" href="#" data-bind="click : function() { $root.sortExportTags(); }"><i class="icon sort alphabet ascending"></i></a>
-	        <a class="popup icon item" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon trash"></i></a>
-	        <a class="popup icon item" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon save"></i></a>
+	        <a class="popup icon item" href="#" data-bind="click : function() { $root.removeAllExportTags(); }"><i class="icon level up"></i></a>
 	        <div class="ui right bottom pointing dropdown link item">
 	        	<i class="icon archive"></i>
 				<i class="dropdown icon"></i>
 		        
 		        <div class="menu vertical hidden">
 		        	<a class="item" href="#" data-bind="click: $root.setStoredTags"><i class="icon recycle"></i> Start from scratch</a>
-			    	<a class="item" href="#" data-bind="click: $root.toggleDeleteMode"><i class="icon mouse pointer"></i> Remove tags by click</a>
+			    	<a class="item" href="#" data-bind="click: $root.saveExportTags"><i class="icon save"></i> Save selected hashtags</a>
 			    	<a class="item" href="#" data-bind="click: $root.deleteGroup"><i class="icon trash"></i> Delete group</a>
 			  	</div>
 	      	</div>
@@ -609,6 +711,26 @@
 			<!-- ko foreach: exportTags -->
 			<a class="ui blue label export" data-bind="html: $root.hashtagizer($data.name) + ' <i class=\'icon close\'></i>', click : function() { $root.removeTag($data); }"></a>
 			<!-- /ko -->
+		</div>
+
+		<div class="ui inverted dimmer">
+			<div class="content">
+				<div class="center">
+					<form class="ui form">
+						<div class="ui internally celled grid">
+							<div class="row">
+								<div class="column">
+									<div class="ui fluid right action left icon input">
+										<i class="tag icon"></i>
+										<input type="text" placeholder="Create a new tag...">
+										<button class="ui teal right labeled icon button" data-bind="click: $root.saveNewHashtag"><i class="plus icon"></i> Save</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 
 		<div class="ui form">
