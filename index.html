@@ -68,6 +68,8 @@
 
 			self.colorArray = ["red","orange","yellow","olive","green","teal","blue","violet","purple","pink","brown","grey","black"]
 
+			self.groupFilters = ["_Captures", "BNS_", "Pocket_"];
+
 			// Class for creating tags
 			self.TAG = function(tag) {
 				this.name = tag;
@@ -121,7 +123,8 @@
 						new self.TAG("OnlyInScandinavia"),
 						new self.TAG("UnlimitedScandinavia"),
 						new self.TAG("TheBestOfScandinavia"),
-						new self.TAG("Schweden")
+						new self.TAG("Schweden"),
+						new self.TAG("Excellent_Nordic")
 					])
 				}, {
 					name : "Landscape & Nature",
@@ -167,7 +170,15 @@
 						new self.TAG("Pocket_AllNature"),
 						new self.TAG("FineArtNature"),
 						new self.TAG("Reflectiongram"),
-						new self.TAG("Wonderful_Places")
+						new self.TAG("Wonderful_Places"),
+						new self.TAG("ig_Bliss"),
+						new self.TAG("Infinity_WorldShoot"),
+						new self.TAG("Worlds_Beautiful_Photos"),
+						new self.TAG("Eart_Shotz"),
+						new self.TAG("ig_World_Colors"),
+						new self.TAG("ig_Serenity"),
+						new self.TAG("ig_Dynamic"),
+						new self.TAG("NatureRomantix")
 					])
 				},{
 					name : "Trees",
@@ -178,7 +189,8 @@
 						new self.TAG("Pocket_Trees"),
 						new self.TAG("BNS_Trees"),
 						new self.TAG("TreeScape"),
-						new self.TAG("Trees")
+						new self.TAG("Trees"),
+						new self.TAG("ww_Nature_Trees")
 					])
 				}, {
 					name : "Popular",
@@ -216,7 +228,10 @@
 						new self.TAG("FotoCatchers"),
 						new self.TAG("Hubs_United"),
 						new self.TAG("ig_MasterPiece"),
-						new self.TAG("GreatNorthCollective")
+						new self.TAG("GreatNorthCollective"),
+						new self.TAG("Exeptional_Pictures"),
+						new self.TAG("Amazing_fs"),
+						new self.TAG("CurateThis1X")
 					])
 				}, {
 					name : "Norrsken",
@@ -245,6 +260,7 @@
 						new self.TAG("SkyMasters"),
 						new self.TAG("Sky_Brilliance"),
 						new self.TAG("SkyMasters_Family"),
+						new self.TAG("Sky_Captures"),
 						new self.TAG("MilkyWay"),
 						new self.TAG("Stargazer"),
 						new self.TAG("InstaSky"),
@@ -254,6 +270,7 @@
 						new self.TAG("Long_Exposure_Pics"),
 						new self.TAG("World_BestSky"),
 						new self.TAG("NightImages"),
+						new self.TAG("Night_Captures"),
 						new self.TAG("igWorldClub_Longexp"),
 						new self.TAG("LongExpo_Addiction"),
 						new self.TAG("LongExposurePhotography"),
@@ -280,11 +297,29 @@
 					color: 'grey',
 					isFolded : ko.observable(false),
 					hashtags : ko.observableArray([
+						new self.TAG("BNS_Waters"),
 						new self.TAG("Pocket_Waters"),
+						new self.TAG("Water_Brilliance"),
+						new self.TAG("Water_Captures"),
+						new self.TAG("Loves_United_Water"),
 						new self.TAG("SeaScape"),
 						new self.TAG("Lighthouse"),
 						new self.TAG("Lighthouse_Captures"),
 						new self.TAG("Lighthouses_Windmills_gs")
+					])
+				},{
+					name : "Cityscape & Street",
+					color: 'grey',
+					isFolded : ko.observable(false),
+					hashtags : ko.observableArray([
+						new self.TAG("StreetView_Sweden"),
+						new self.TAG("Streets_OfTheWorld"),
+						new self.TAG("BestCityBreaks"),
+						new self.TAG("Great_Captures_City"),
+						new self.TAG("ScandinavianTravels"),
+						new self.TAG("TravellingThroughTheWorld"),
+						new self.TAG("igWorldClub_Street"),
+						new self.TAG("City_Captures")
 					])
 				}
 			];
