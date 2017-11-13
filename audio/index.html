@@ -10,7 +10,7 @@
    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 	<!-- Site Properties -->
-	<title>Tags</title>
+	<title>Vilket läte?</title>
 	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.css">
 	<style type="text/css">
 	html, body {height: 100%;}
@@ -18,6 +18,18 @@
  	#wrap {min-height: 100%; max-width:500px; margin:0 auto;}
  	footer { position: fixed; z-index:100; bottom: 0; left: 0; right:0; clear:both; background-color:#fff; border-top:1px solid #999; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
  	header .ui.inline.loader { top: 10px; float: left; margin-right: 20px; }
+ 	.button .label {
+ 		margin-top:5px;
+ 		display:block;
+ 		text-align:center;
+ 	}
+ 	.button .icon {
+ 		margin-top:10px !important;
+ 		font-size:2em !important;
+ 	}
+ 	.playbutton { font-weight:normal; font-size:2.5em !important; background-color: #21435d !important; }
+	.playbutton:hover { background-color: #316186 !important; }
+ 	
 	</style>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
@@ -168,12 +180,10 @@
 				    success: function (result) {
 				        self.log("success");
 				        self.log(result);
-
 						self.updateSettings.setSettingsFromResult(result);
-
 						self.setCurrentRecording(result.recordings[self.getRandomInt(1, result.recordings.length)]);
-
 				        self.inProgress(false);
+				        self.toggleRecording();
 				        return result;
 				    },
 				    error: function () {
@@ -292,8 +302,8 @@
 
 	<main class="ui">
 
-		<header class="ui secondary segment">
-			<h2 class="ui header">
+		<header class="ui basic center aligned segment">
+			<h1 class="ui header">
 				<div class="content">
 					Vilket läte?
 					<div class="sub header">
@@ -307,58 +317,59 @@
 						  </div>
 					</div>
 				</div>
-			</h2>
+			</h1>
 		</header>
 
-		<div class="ui top attached blue massive icon button" tabindex="0" data-bind="click: function() { $root.toggleRecording(); }">
-			<i class="icon" data-bind="css : { 'play' : !playing(), 'pause' : playing() }"></i>
+		<div class="ui top attached blue massive icon button fluid playbutton" tabindex="0" data-bind="visible: playerReady() && !inProgress(), click: function() { $root.toggleRecording(); }">
+			<i class="icon" data-bind="css : { 'video play' : !playing(), 'pause circle' : playing() }"></i>
+			<span class="label" data-bind="text : playing() ? 'Pausa' : 'Spela upp'">Spela upp</span>
 		</div>
 
-		<div data-bind="visible: playerReady() && !inProgress()">
-  			<button class="ui top attached blue massive icon button" data-bind="click: function() { $root.toggleRecording(); }">
-  				<i class="icon" data-bind="css : { 'play' : !playing(), 'pause' : playing() }"></i>
+
+		<div class="ui bottom attached basic large fluid buttons" data-bind="visible: playerReady() && !inProgress()">
+			<button class="ui large basic teal icon button" data-bind="click: function() { $root.toggleRecordingInfo(); }">
+  				<i class="icon" data-bind="css : { 'unhide' : !showRecordingInfo(), 'hide' : showRecordingInfo() }"></i>
+  				<span class="label" data-bind="text : showRecordingInfo() ? 'Dölj facit' : 'Visa facit'">Visa facit</span>
   			</button>
-  			<div class="ui basic buttons">
-	  			<button class="ui blue massive icon button" data-bind="click: function() { $root.getRandomRecording(); }">
-	  				<i class="shuffle icon"></i>
-	  			</button>
-	  			<button class="ui blue massive icon button" data-bind="click: function() { $root.toggleRecordingInfo(); }">
-	  				<i class="icon" data-bind="css : { 'unhide' : !showRecordingInfo(), 'hide' : showRecordingInfo() }"></i>
-	  			</button>
-	  		</div>
+  			<button class="ui large basic teal icon button" data-bind="click: function() { $root.getRandomRecording(); }">
+  				<i class="shuffle icon"></i> 
+  				<span class="label">Nästa ljud</span>
+  			</button>
   		</div>
+		<br>
+		<section class="ui one column grid">
 
-		<section class="ui segment">
-
-			<div class="ui card" data-bind="visible : showRecordingInfo">
-				<div class="content" data-bind="with: currentRecording">
-					<div class="header" data-bind="html: $root.utilities.speciesName(en, ssp)">Species name</div>
-					<div class="meta">
-						<em class="category" data-bind="text: $root.utilities.scientificName([gen, sp, ssp])">Scientific</em>
+			<div class="column">
+				<div class="ui fluid card" data-bind="visible : showRecordingInfo">
+					<div class="content" data-bind="with: currentRecording">
+						<div class="header" data-bind="html: $root.utilities.speciesName(en, ssp)">Species name</div>
+						<div class="meta">
+							<em class="category" data-bind="text: $root.utilities.scientificName([gen, sp, ssp])">Scientific</em>
+						</div>
+						<div class="meta">
+							<span class="right floated time" data-bind="text: date">Recording date</span>
+							<span class="category" data-bind="text: type">Type</span>
+						</div>
+						<div class="description">
+							<p>
+								<i class="icon user"></i>
+								<span data-bind="text: rec"></span>
+								<br>
+								<i class="marker icon"></i>
+								<a href="#" data-bind="attr : { 'href': $root.utilities.gMapsUrl(lat, lng) }, text: $root.utilities.locationName(loc, cnt)" target="_blank"></a>
+								<br>
+								<i class="bookmark icon"></i>
+								<a href="#" data-bind="attr : { 'href': url }, text : url" target="_blank"></a>
+							</p>
+						</div>
 					</div>
-					<div class="meta">
-						<span class="right floated time" data-bind="text: date">Recording date</span>
-						<span class="category" data-bind="text: type">Type</span>
-					</div>
-					<div class="description">
-						<p>
-							<i class="icon user"></i>
-							<span data-bind="text: rec"></span>
-							<br>
-							<i class="marker icon"></i>
-							<a href="#" data-bind="attr : { 'href': $root.utilities.gMapsUrl(lat, lng) }, text: $root.utilities.locationName(loc, cnt)" target="_blank"></a>
-							<br>
-							<i class="bookmark icon"></i>
-							<a href="#" data-bind="attr : { 'href': url }, text : url" target="_blank"></a>
-						</p>
-					</div>
+					<div class="extra content">
+						<div class="ui two buttons">
+							<div class="ui basic green button"><i class="icon checkmark"></i> Rätt</div>
+							<div class="ui basic red button"><i class="icon remove"></i> Fel</div>
+						</div>
+				    </div>
 				</div>
-				<div class="extra content">
-					<div class="ui two buttons">
-						<div class="ui basic green button"><i class="icon checkmark"></i> Rätt</div>
-						<div class="ui basic red button"><i class="icon remove"></i> Fel</div>
-					</div>
-			    </div>
 			</div>
 
 		</section>
@@ -366,10 +377,5 @@
 	</main>
 
 </div>
-
-<footer>
-	<div class="ui basic segment">
-	</div>
-</footer>
 </body>
 </html>
