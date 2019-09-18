@@ -1,0 +1,802 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Exhibition Web</title>
+  <meta name="description" content="Exhibition Web">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" integrity="sha256-Tjl7WVgF1hgGMgUKZZfzmxOrtoSf8qltZ9wMujjGNQk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40=" crossorigin="anonymous" />
+  <link href="https://raw.githubusercontent.com/riesinger/pure-css-tooltips-tutorial/finished/tooltips.css" rel="stylesheet">
+  <link rel="profile" href="http://microformats.org/profile/hcard">
+  <style type="text/css">
+  /* FONT IMPORT */
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800,900&display=swap');
+
+  /* GENERAL */
+  :root {
+    --ex-bg-main: #f1f3f5;
+    --ex-bg-secondary: #37526D;
+    --ex-color-header: #8196ab;
+    --ex-color-header-sub: #bbcad8;
+    --ex-link: #A5AFB8;
+    --grid-text: #9AA9B8;
+    --grid-icon: #BFCFDF;
+    --nav-tabs-active: #4194E6;
+    --tm: 9px;
+    --ex-table-headercolor: #B4C4D4;
+    --ex-table-text:#768594;
+    --ex-table-bordercolor: #E0E7EE;
+  }
+  .box-shadow { box-shadow: 0 3px 6px rgba(53, 108, 149, 0.07); }
+  .cursor-pointer { cursor: pointer; }
+
+  /* .cursor-pointer:hover { color: var(--nav-tabs-active) !important; } */
+
+  body { padding:0; margin:0; font-size: 16px; background-color: var(--ex-bg-main); }
+  body * { font-family: 'Montserrat', sans-serif; }
+
+  /* TYPOGRAPHY */
+  h2 { color:var(--ex-color-header); padding:0; margin: 0 0 0.5rem; font-size: 1.3rem; font-weight: bold; }
+  p.lead { color: var(--ex-color-header-sub); margin: 0 0 2rem; font-weight: 500; }
+
+  /* LEFT NAVIGATION */
+  nav { background-color:#fff; }
+  nav a { text-decoration: none; color: var(--ex-link); padding:2rem 2.5rem; display:block; font-weight: 500; }
+  nav a.active { background-color:var(--ex-bg-secondary) !important; color:#fff !important; font-weight:800; }
+  nav a:hover { color: var(--nav-tabs-active); }
+  nav a .fa { margin-right:1rem; }
+
+
+  /*.expand-menu-button { font-size:1.5rem; position: absolute; top: 1rem; right: 1rem; color: var(--ex-bg-secondary); display: block; z-index:2000; cursor:pointer; }*/
+  .expand-menu-button { position: absolute; top: 30px; right: 40px; display:block; z-index:2000; cursor:pointer; }
+  .expand-menu-button.open { position: fixed !important; }
+  .box { border-radius: 2px; position: absolute; right: 0; top:0; }
+  .box .btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35px; cursor: pointer; }
+
+  .box span { display: block; width: 100%; border-radius: 3px; height: 4px; background:var(--ex-link); transition: all .3s; position: relative; }
+
+.box span + span { margin-top: 5px; }
+.active span:nth-child(1) { animation: ease .4s top forwards; }
+.not-active span:nth-child(1) { animation: ease .4s top-2 forwards; }
+.active span:nth-child(2) { animation: ease .4s scaled forwards; }
+.not-active span:nth-child(2) { animation: ease .4s scaled-2 forwards; }
+.active span:nth-child(3) { animation: ease .4s bottom forwards; }
+.not-active span:nth-child(3) { animation: ease .4s bottom-2 forwards; }
+
+@keyframes top {
+  0% {
+    top: 0;
+    transform: rotate(0);
+  }
+  50% {
+    top: var(--tm);
+    transform: rotate(0);
+  }
+  100% {
+    top: var(--tm);
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes top-2 {
+  0% {
+    top: var(--tm);
+    transform: rotate(45deg);
+  }
+  50% {
+    top: var(--tm);
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 0;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes bottom {
+  0% {
+    bottom: 0;
+    transform: rotate(0);
+  }
+  50% {
+    bottom: var(--tm);
+    transform: rotate(0);
+  }
+  100% {
+    bottom: var(--tm);
+    transform: rotate(135deg);
+  }
+}
+
+@keyframes bottom-2 {
+  0% {
+    bottom: var(--tm);
+    transform: rotate(135deg);
+  }
+  50% {
+    bottom: var(--tm);
+    transform: rotate(0);
+  }
+  100% {
+    bottom: 0;
+    transform: rotate(0);
+  }
+}
+
+@keyframes scaled {
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes scaled-2 {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+  
+
+  
+  /* MAIN CONTENT AND VIEWS */
+  section.page.hidden { display: none !important; }
+
+  section.page.login { display: grid; justify-items: stretch; align-items: stretch; grid-template-columns: 1fr 1fr; grid-template-areas: "form welcome"; height:100%; }
+  section.page.login article.login-welcome { background-color: var(--ex-bg-main); }
+  section.page.login article.login { background-color: #fff; }
+  section.page.login article { display: flex; justify-content: center; align-items: center; }
+  section.page.login h4 { text-align:center; color: #C3D2E1; margin:0; }
+  section.page.login h1 { text-align:center; color: #C3D2E1; font-size: 4rem; margin: 0 0 2rem; }
+  section.page.login .circle { background-color:#fff; border-radius:50%; min-width:20rem; min-height: 20rem; max-width: 20rem; margin: 0 auto; }
+
+  section.page.portal { display: grid; justify-items: stretch; align-items: stretch; grid-template-columns: 360px auto; height:100%; }
+  section.page.portal aside { width:100%; background-color: #fff; }
+  section.page.portal aside h1 { padding-left:2.5rem; position:relative; }
+  section.page.portal aside h1 .fa { margin-left: 1rem; top: 0.2rem; cursor: pointer; color: #a5afb8; }
+
+
+
+  main { background-color: var(--ex-bg-main); padding:4rem; width:100%; box-sizing: border-box; }
+
+  article.app { display: grid; grid-template-columns: minmax(30rem, 2fr) 1fr; grid-template-areas: "text image"; grid-gap: 3rem; }
+  article.app section.text { grid-area: text; }
+  article.app section.image { grid-area: image; }
+  article.app section.image img { width:100%; height: auto; }
+
+  article.view.inactive { display:none; }
+
+  article.participants nav { border-bottom:1px solid #E0E7EE; display:flex; }
+  article.participants nav a { color:#AAB7C4; border-bottom:3px solid transparent; margin: 0 0 0 2rem; padding:1rem 0.25rem; }
+  article.participants nav a.active { color:var(--nav-tabs-active) !important; border-bottom:3px solid var(--nav-tabs-active); background-color: #fff !important; }
+
+  /*  FORMS */
+  .form-row { margin-bottom:2rem; }
+  .form-row.inline { display: flex; align-items: baseline; margin-bottom:0; padding:2rem; flex-wrap:wrap; }
+  input { font-size: 1rem; width:100%; border:0; padding:1rem; background-color:#fff; border-radius: 5px; font-weight: 500; }
+  button { font-size: 1rem; cursor:pointer; border: 0; color: #fff; padding:1rem 2.5rem; background-color: #79B86A; border-radius: 5px; white-space: nowrap; font-weight: 500; }
+  button.login { background-color: #657EC4; float: right; }
+  button.badge { background-color:#37526D; }
+  button.meetings { background-color: #EE7365; }
+  button.add { margin-left:1rem; }
+  button.checkbox { margin:0 !important; padding: 0; display: inline; background-color: transparent; color: #768594; cursor: pointer; }
+  
+  ::-webkit-input-placeholder { color:#B4C4D4; }
+
+  .form-add { display:flex; }
+  .form-add input::-webkit-input-placeholder { color: #D5D5D5; }
+  .form-search { color:#B4C4D4; background-color: #F1F5F9; display:flex; align-items: baseline; border-radius: 5px; margin: 0 1rem 1rem 0; }
+  .form-search input { background-color: transparent; }
+  .form-search .fa { margin-left:1rem; }
+
+  .login-form { width: 475px; }
+  .login-form label { color:#C3D2E1; margin-bottom: 0.25rem; display: block; font-size: 1.2rem; }
+  .login-form input { border:3px solid #C3D2E1; }
+
+  /* GRIDS */
+  .grid { margin:0; padding:0; }
+  .grid li { display: flex; align-items: baseline; border-radius:5px; list-style-type: none; margin:0 0 0.5rem; padding:1rem; background-color:#fff; color:var(--grid-text); font-weight: 600; }
+  .grid.sortable li { cursor:move; }
+  .grid li .text { flex-grow: 1!important; }
+  .grid li .fa { color:var(--grid-icon); margin-right:1rem; }
+  .grid li .fa:last-child { margin-right:0rem; }
+
+  /* CARDS */
+  .cards { display: grid; grid-gap: 2rem; justify-items: stretch; align-items: stretch; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+  .card { border-radius:5px; overflow:hidden; }
+  .card.links .cardimage {  min-height:12rem; color:#fff; text-align: center; justify-content: center; display: flex; align-items: center; position:relative; }
+  .gradient.orange { 
+    background: #f9b035; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #f9b035 0%, #ee7365 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #f9b035 0%,#ee7365 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #f9b035 0%,#ee7365 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
+  .gradient.blue {
+    background: #5e7995; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #5e7995 0%, #37526d 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #5e7995 0%,#37526d 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #5e7995 0%,#37526d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
+  .card .cardimage .fa { color: rgba(255,255,255,0.6); position:absolute; top:1rem; right:1rem;font-size: 1.5rem; }
+  .card footer { display: flex; }
+  .card footer a { background-color: #fff; border-right:1px solid #e5ebf2; text-align:center; flex: 1 1 auto!important; color:#8297ac; min-height: 4rem; text-decoration: none; display:flex; align-items: center; justify-content: center; }
+  .card footer a:hover { color: var(--nav-tabs-active); }
+  .card footer a:last-child { border-right: none; }
+
+  .card.user { flex: 1 0 0%; display:flex; flex-direction: column; background-color: #fff; }
+  .card.user header { padding:1rem; color:#fff } 
+  .card.user h4 { margin:0; }
+  .card.user h4 .company-name { text-transform: uppercase; font-weight: 100; color: #fff; }
+  .card.user address { color:rgba(255,255,255,0.6); font-size:80%; }
+  .card.user address a { color:rgba(255,255,255,0.6); }
+  .card.user .label { display:block; color:var(--ex-table-headercolor); font-size: 70%; margin: 0.5rem 0 0.25rem; }
+  .card.user .value { font-weight: 500; }
+  .card.user hr { margin:0.5rem 0; border: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); }
+  .card.user .card-body { flex: 1 1 auto; background-color: #fff; padding: 0.5rem 1rem; }
+  .card.user footer { background-color: #fff; padding: 0.5rem 1rem; justify-content: flex-end; }
+  .card.user em.comment { font-size:80%; }
+
+  /* Area of interest badge */
+  .aoi-badge { display:inline-block; border-radius:5px; padding:0.5rem; background-color:var(--ex-bg-main); margin:0 3px 3px 0;}
+
+
+  /* TABLES */
+  .tablecontent { background-color: #fff; border-radius: 5px; }
+  table  { width: 100%; border-spacing: 0; border-collapse: collapse; }
+  th, td { padding: 1rem 0 1rem 2rem; }
+  th { border-bottom:2px solid var(--ex-table-bordercolor); color:var(--ex-table-headercolor); font-size:80%; font-weight:normal; text-align: left; }
+  th.th-checkbox { width:1%; }
+  td { font-weight:normal; color: var(--ex-table-text); border-bottom:1px solid var(--ex-table-bordercolor); font-size:0.9rem; }
+  td.align-middle { vertical-align:middle; }
+  td a { color: var(--ex-table-text); }
+  td a:hover { color:var(--nav-tabs-active); }
+  td .label { display:none; }
+  td .label:after { content: ':'; }
+  td .icon { display:inline-block; padding: .5rem 1rem .5rem 0; }
+  tbody tr.checked td { background-color: var(--ex-bg-main); }
+  tfoot td { color:var(--ex-table-headercolor); font-size:80%; text-align: center; border: none; }
+  footer.tablefoot { padding:1rem; color: var(--ex-table-headercolor); font-size:80%; text-align: center; border: none; }
+
+
+  /* RESPONSIVE STUFF */
+  @media (min-width: 768px) { 
+      .expand-menu-button { display:none !important; }
+      .d-show-sm { display: none !important; }
+  }
+
+  @media (max-width: 767.98px) { 
+    .cards { grid-template-columns: 1fr; }
+    section.page.portal  { grid-template-columns: 1fr !important; }
+    aside { -webkit-animation: slide-out-left 0.5s ease-in-out both;
+	        animation: slide-out-left 0.5s ease-in-out both; display:none; }
+    aside.expanded { display: block; position: fixed; top:0; bottom:0; right:0; left:0; z-index:1000; background-color: #fff; width:100% !important; 
+      -webkit-animation: slide-in-left 0.5s ease-in-out both;
+	        animation: slide-in-left 0.5s ease-in-out both;
+    }
+    button { display:block; width:100%; margin:1rem 0 0 !important; }
+    .form-add  { flex-wrap:wrap; }
+    .form-search { margin:0; width: 100%; max-width: 100%; }
+    @-webkit-keyframes slide-in-left {
+      0% { -webkit-transform: translateX(-1000px); transform: translateX(-1000px); opacity: 0; }
+      100% { -webkit-transform: translateX(0); transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slide-in-left {
+      0% { -webkit-transform: translateX(-1000px); transform: translateX(-1000px); opacity: 0; }
+      100% { -webkit-transform: translateX(0); transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slide-out-left {
+      100% { -webkit-transform: translateX(-1000px); transform: translateX(-1000px); opacity: 0; }
+      0% { -webkit-transform: translateX(0); transform: translateX(0); opacity: 1; }
+    }
+    tbody td { font-size:80%; }
+    .d-sm-none { display:none; }
+    .d-show-md { display:none !important; }
+  }
+
+  @media (max-width: 991.98px) {  
+    section.page.login { grid-template-columns: 1fr !important; }
+    main { padding: 1.5rem !important; }
+    article.app { grid-template-columns: 1fr; grid-template-areas: "text"; grid-gap: 0rem; }
+    article.app section.image { display:none; }
+    .form-search input { width:100%; }
+  }
+
+  @media (max-width: 1199.98px) {  
+    main { padding: 2rem; }
+    nav a { padding: 1rem; text-align: center; font-size: 0.8rem; }
+    nav a .fa { display: block; font-size: 1.5rem; margin: 0 0 0.5rem; }
+    section.page.portal { grid-template-columns: 200px auto; }
+    th, td { padding: 0.5rem 0 0.5rem 1rem; vertical-align:top; }
+  }
+
+  @media (min-width: 1200px) {  
+    .d-show-md { display:none !important; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <section class="page login" data-bind="css: { 'hidden': !$root.views.login.active() }">
+    <article class="login">
+      <div class="login-form">
+        <div class="form-row">
+          <label>Username</label>
+          <input type="text">
+        </div>
+        <div class="form-row">
+          <label>Password</label>
+          <input type="password">
+        </div>
+        <button type="button" class="login" data-bind="click: function() { $root.views.login.toggleActive() }">Login</button>
+      </div>
+    </article>
+    <article class="login-welcome">
+      <div class="welcome">
+        <h4>Welcome to Trippus</h4>
+        <h1>Exhibitor portal</h1>
+        <div class="circle"></div>
+      </div>
+    </article>
+  </section>
+  <!-- // LOGIN PAGE -->
+
+  <!-- MAIN APP CONTENT -->
+  <section class="page portal" data-bind="css: { 'hidden': $root.views.login.active() }">
+    <a href="#" class="expand-menu-button" data-bind="click: function() { $root.menu.navExpanded(!$root.menu.navExpanded()) }, css: { 'open': $root.menu.navExpanded() }">
+        <div class="box">
+          <div class="btn" data-bind="css : { 'active': $root.menu.navExpanded(), 'not-active': !$root.menu.navExpanded() }">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </a>
+    <!-- Left column -->
+    <aside data-bind="css: { 'expanded' : $root.menu.navExpanded }">
+      <h1>
+        <span class="title">Volvo Co.</span>
+        <i class="fa fa-sign-out-alt" data-bind="click: function() { $root.views.login.toggleActive() }"></i>
+      </h1>
+      <nav data-bind="foreach: menu.items">
+        <a href="#" data-bind="click: function() { $root.menu.setActiveItem($index(), view) }, css: { 'active': $index() === $root.menu.activeItemIndex() }">
+          <i class="fa" data-bind="class : icon"></i> 
+          <span data-bind="text: text" class="text"></span>
+        </a>
+      </nav>
+    </aside>
+    <!-- // Left column -->
+    <main class="content">
+      <article class="view app" data-bind="css: { 'inactive': $root.menu.activeView() !== 'app' }">
+        <section class="text">
+          <h2>Areas of interest</h2>
+          <p class="lead">Associate your visitors with the area they are interested in.</p>
+          <div class="form-row form-add">
+            <input type="text" placeholder="Enter an area of interests" data-bind="value: $root.grids.inputValue" class="box-shadow"/>
+            <button type="button" data-bind="click: function() { $root.grids.addItem('interests') }" class="add">Add area</button>
+          </div>
+          <ul class="grid sortable" data-bind="foreach: grids.data.interests">
+            <li class="box-shadow">
+              <i class="fa fa-arrows-alt-v"></i>
+              <span data-bind="text: $data" class="text"></span>
+              <i class="fa fa-edit"></i>
+              <i class="fa fa-trash-alt cursor-pointer" data-bind="click: function() { $root.grids.removeItem($index(), 'interests') }"></i>
+            </li>
+          </ul>
+        </section>
+        <section class="image">
+          <img src="phone.gif" />
+        </section>
+      </article>
+      <article class="view links" data-bind="css: { 'inactive': $root.menu.activeView() !== 'links' }">
+        <h2>Invitation link</h2>
+        <p class="lead">Invite your stand personnel or clients to the event</p>
+        <div class="cards">
+          <div class="card links box-shadow">
+            <div class="cardimage gradient blue">
+              <h3>Stand personnel</h3>
+              <i class="fa fa-briefcase"></i>
+            </div>
+            <footer>
+              <a href="#"><i class="fa fa-user-plus"></i></a>
+              <a href="#" tooltip tooltip-bottom tooltip-content="Copy link"><i class="fa fa-link"></i></a>
+              <a href="#" tooltip tooltip-bottom tooltip-content="Send email"><i class="fa fa-envelope"></i></a>
+            </footer>
+          </div>
+          <div class="card links box-shadow">
+            <div class="cardimage gradient orange">
+              <h3>Invite visitors</h3>
+              <i class="fa fa-user"></i>
+            </div>
+            <footer>
+              <a href="#"><i class="fa fa-link"></i></a>
+              <a href="#"><i class="fa fa-envelope"></i></a>
+            </footer>
+          </div>
+        </div>
+      </article>
+      <article class="view meetings" data-bind="css: { 'inactive': $root.menu.activeView() !== 'meetings' }">
+        <h2>One-to-one meetings</h2>
+        <p class="lead">An overview of your confirmed meetings.</p>
+        <section class="box-shadow tablecontent">
+          <div class="form-row inline">
+            <div class="form-search">
+              <i class="fa fa-search"></i>
+              <input type="text" placeholder="Search for meeting"/>
+            </div>
+            <button type="button" class="meetings" data-bind="visible: $root.views.meetings.isAnySelected">Cancel meetings</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th class="th-checkbox">
+                  <button type="button" class="checkbox" data-bind="click: $root.views.meetings.selectAll" aria-label="Select all rows">
+                    <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : $root.views.meetings.allSelected(), 'far fa-square': !$root.views.meetings.allSelected() }"></i>
+                  </button>
+                </th>
+                <th>Timeslots</th>
+                <th>
+                  <span class="d-sm-none">Company</span>
+                  <span class="d-show-sm">Person, Company</span>
+                </th>
+                <th class="d-sm-none">Person</th>
+                <th>
+                  <span class="d-show-sm">Contact</span>
+                  <span class="d-sm-none">Email</span>
+                </th>
+                <th class="d-sm-none">Mobile</th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach: views.meetings.gridData">
+              <tr data-bind="css: { 'checked' : isSelected }">
+                <td class="align-middle" data-bind="click: function() { $root.views.meetings.toggleSelect(this); $root.views.meetings.countSelected() }" class="cursor-pointer">
+                  <button type="button" class="checkbox" aira-label="Select row">
+                    <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
+                  </button>
+                </td>
+                <td data-bind="text: timeslot"></td>
+                <td>
+                  <span class="d-show-sm" data-bind="text: person"></span>
+                  <br class="d-show-sm">
+                  <b data-bind="text: company"></b>
+                </td>
+                <td class="d-sm-none" data-bind="text: person"></td>
+                <td>
+                  <a data-bind="attr: { 'href': 'mailto:' + email, 'title': email }"><span data-bind="text: email" class="d-sm-none"></span><i class="fa fa-lg fa-envelope icon d-show-sm"></i></a>
+                  <a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }" class="d-show-sm"><i class="fa fa-lg fa-mobile-alt icon"></i></a>
+                </td>
+                <td class="d-sm-none"><a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }, text: mobile"></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <footer class="tablefoot">
+              Showing 21 of 21 entries
+          </footer>
+        </section>
+      </article>
+      <article class="view leads" data-bind="css: { 'inactive': $root.menu.activeView() !== 'leads' }">
+          <h2>Leads</h2>
+          <p class="lead">All of your leads from the exhibition scanning.</p>
+          <div class="cards users" data-bind="foreach: views.leads.gridData">
+            <article class="card user box-shadow">
+                <header class="cardimage gradient blue">
+                  <h4>
+                    <span data-bind="text: person"></span>
+                    <small data-bind="text: ' | ' + company" class="company-name"></small>
+                  </h4>
+                  <address>
+                      <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a><br>
+                      <span data-bind="text: mobile" class="value"></span>
+                  </address>
+                </header>
+                <div class="card-body">
+                  <div>
+                      <span data-bind="text: $root.views.settings.headers['areaOfInterests']" class="label"></span>
+                      <span data-bind="foreach: areaOfInterests">
+                        <strong data-bind="text: $data" class="aoi-badge"></strong>
+                      </span>
+                  </div>
+                  <div data-bind="visible: comments">
+                      <span data-bind="text: $root.views.settings.headers['comments']" class="label"></span>
+                      <em data-bind="text: comments || '&nbsp;-'" class="comment"></em>
+                  </div>
+                </div>
+                <footer style="text-align: right;">
+                    <small data-bind="text: $root.views.settings.headers['scanned'] + ':' + scanned" style="color:#ccc;"></small>
+                </footer>
+            </article>
+          </div>
+          <section class="box-shadow tablecontent">
+            <div class="form-row inline">
+              <div class="form-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search for lead"/>
+              </div>
+              <a href="#">Download Excel</a>
+            </div>
+            <div class="tablewrapper d-sm-none">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Scanned</th>
+                    <th>Company</th>
+                    <th>Person</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Area of interest</th>
+                    <th>Comments</th>
+                  </tr>
+                </thead>
+                <tbody data-bind="foreach: views.leads.gridData">
+                  <tr>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['scanned']" class="label"></span>
+                      <span data-bind="text: scanned" class="value"></span>
+                    </td>
+                    <td>
+                        <span data-bind="text: $root.views.settings.headers['company']" class="label"></span>
+                      <b data-bind="text: company" class="value"></b>
+                    </td>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['person']" class="label"></span>
+                      <span data-bind="text: person" class="value"></span>
+                    </td>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['email']" class="label"></span>
+                      <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a>
+                    </td>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['mobile']" class="label"></span>
+                      <span data-bind="text: mobile" class="value"></span>
+                    </td>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['areaOfInterests']" class="label"></span>
+                      <span data-bind="foreach: areaOfInterests">
+                          <strong data-bind="text: $data" class="aoi-badge"></strong>
+                        </span>
+                    </td>
+                    <td>
+                      <span data-bind="text: $root.views.settings.headers['comments']" class="label"></span>
+                      <span data-bind="text: comments || '&nbsp;-'" class="value"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <footer class="tablefoot">
+                  Showing 21 of 21 entries
+              </footer>
+            </div>
+          </section>
+        </article>
+      <article class="view participants" data-bind="css: { 'inactive': $root.menu.activeView() !== 'participants' }">
+          <h2>Your participants</h2>
+          <p class="lead">Select your stand personnel to print their badge. You can also see your registered guests.</p>
+          <section class="box-shadow tablecontent">
+            <nav class="tabs">
+              <a href="#" data-bind="click: function() { $root.views.participants.setActiveTab(0) }, css: { 'active': $root.views.participants.activeTabIndex() === 0 }">Stand personnel</a>
+              <a href="#" data-bind="click: function() { $root.views.participants.setActiveTab(1) }, css: { 'active': $root.views.participants.activeTabIndex() === 1 }">Guests</a>
+            </nav>
+            <div class="form-row inline">
+              <div class="form-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search for participants"/>
+              </div>
+              <button type="button" class="badge" data-bind="visible: $root.views.participants.isAnySelected">Show badge</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th data-bind="visible: $root.views.participants.activeTabIndex() === 0" class="th-checkbox">
+                    <button type="button" class="checkbox" data-bind="click: $root.views.participants.selectAll" aria-label="Select all rows">
+                      <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : $root.views.participants.allSelected(), 'far fa-square': !$root.views.participants.allSelected() }"></i>
+                    </button>
+                  </th>
+                  <th class="d-sm-none">Person</th>
+                  <th>
+                    <span class="d-sm-none">Company</span>
+                    <span class="d-show-sm">Person, Company</span>
+                    <span class="d-show-md">Person, Company</span>
+                  </th>
+                  <th>
+                    <span class="d-show-sm">Contact</span>
+                    <span class="d-show-md">Contact</span>
+                    <span class="d-sm-none">Email</span>
+                  </th>
+                  <th class="d-sm-none">Mobile</th>
+                </tr>
+              </thead>
+              <tbody data-bind="foreach: views.participants.gridData">
+                <tr data-bind="css: { 'checked' : isSelected }">
+                  <td class="align-middle" data-bind="visible: $root.views.participants.activeTabIndex() === 0, click: function() { $root.views.participants.toggleSelect(this); $root.views.participants.countSelected() }" class="cursor-pointer">
+                    <button type="button" class="checkbox" aira-label="Select row">
+                      <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
+                    </button>
+                  </td>
+                  <td class="d-sm-none" data-bind="text: person"></td>
+                  <td>
+                    <span class="d-show-sm" data-bind="text: person"></span>
+                    <br class="d-show-sm">
+                    <b data-bind="text: company"></b>
+                  </td>
+                  <td>
+                    <a data-bind="attr: { 'href': 'mailto:' + email, 'title': email }"><span data-bind="text: email" class="d-sm-none d-show-md"></span><i class="fa fa-lg fa-envelope icon d-show-sm"></i></a>
+                    <a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }" class="d-show-sm"><i class="fa fa-lg fa-mobile-alt icon"></i></a>
+                  </td>
+                  <td class="d-sm-none"><a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }, text: mobile"></a></td>
+                </tr>
+              </tbody>
+            </table>
+            <footer class="tablefoot">
+                Showing 21 of 21 entries
+            </footer>
+          </section>
+        </article>
+    </main>
+  </section>
+  <!-- // MAIN APP CONTENT -->
+
+  <script type="text/javascript">
+  // The main viewmodel for menu, grids etc...
+  function exhibitionViewModel() {
+    var self = this;
+
+    self.menu = {
+      items: ko.observableArray([
+        { text: "Exhibiton app", icon: "fa-mobile-alt", view: "app" },
+        { text: "Invitation links", icon: "fa-envelope", view: "links" },
+        { text: "One-to-one meetings", icon: "fa-handshake", view: "meetings" },
+        { text: "Leads", icon: "fa-portrait", view: "leads" },
+        { text: "Your participants", icon: "fa-user", view: "participants" }
+      ]),
+      navExpanded: ko.observable(false),
+      activeView: ko.observable('app'),
+      activeItemIndex: ko.observable(0),
+      setActiveItem: function(index, view) {
+        self.menu.activeItemIndex(index);
+        self.menu.activeView(view);
+        self.menu.navExpanded(false);
+      }
+    }
+
+    self.views = {
+      settings: {
+        headers: {
+          "scanned": "Scanned",
+          "timeslot": "Timeslots",
+          "person": "Person",
+          "company": "Company",
+          "email": "Email",
+          "mobile": "Mobile",
+          "areaOfInterests": "Area of interests",
+          "comments": "Comments"
+        }
+      },
+      login: {
+        active: ko.observable(true),
+        toggleActive: function() {
+          self.views.login.active(!self.views.login.active());
+        }
+      },
+      meetings: {
+        gridData: ko.observableArray([
+          { isSelected : ko.observable(false), "timeslot" : "08:00-08:20", "person": "Grant Marshall", "company": "Grok", "email": "marshall@yahoo.com", "mobile": "+46238638789" },
+          { isSelected : ko.observable(false), "timeslot" : "08:20-08:40", "person": "Pena Valdez", "company": "Rotodyne", "email": "valdez@yahoo.com", "mobile": "+46706045578" },
+          { isSelected : ko.observable(false), "timeslot" : "08:40-09:00", "person": "Jessica Miles", "company": "Sensate", "email": "miles@mail.com", "mobile": "+46946652495" },
+          { isSelected : ko.observable(false), "timeslot" : "09:00-09:20", "person": "Kerri Barber", "company": "Flexigen", "email": "barber@gmail.com", "mobile": "+46946652495" },
+          { isSelected : ko.observable(false), "timeslot" : "09:20-09:40", "person": "Natasha Gamble", "company": "Radiantix", "email": "gamble@outlook.com", "mobile": "+46073456981" }
+        ]),
+        countSelected : function() {
+          var count = 0;
+          ko.utils.arrayForEach(self.views.meetings.gridData(), function(item) {
+              if (item.isSelected()) {
+                count++;
+              }
+          });
+          self.views.meetings.isAnySelected(count > 0);
+          return true;
+        },
+        isAnySelected: ko.observable(false),
+        allSelected: ko.observable(false),
+        selectAll : function() {
+            var all = self.views.meetings.allSelected();
+            ko.utils.arrayForEach(self.views.meetings.gridData(), function(listItem) {
+              listItem.isSelected(!all); 
+            });
+            self.views.meetings.countSelected();
+            self.views.meetings.allSelected(!all);
+            return true;
+        },
+        toggleSelect: function(item) {
+          item.isSelected(!item.isSelected());
+        }
+      },
+      leads: {
+        gridData: ko.observableArray([
+          { "scanned" : "2019-03-11 13:01", "person": "Grant Marshall", "company": "Grok", "email": "marshall@yahoo.com", "mobile": "+46238638789", "areaOfInterests": ["Volvo XC60", "Leasing"], "comments": "Interested in campaign" },
+          { "scanned" : "2019-03-11 13:12","person": "Pena Valdez", "company": "Rotodyne", "email": "valdez@yahoo.com", "mobile": "+46706045578", "areaOfInterests": ["Leasing"], "comments": "" },
+          { "scanned" : "2019-03-11 13:24","person": "Jessica Miles", "company": "Sensate", "email": "miles@mail.com", "mobile": "+46946652495", "areaOfInterests": ["Volvo on call", "Volvo 740"], "comments": "Call on monday" },
+          { "scanned" : "2019-03-11 13:41","person": "Kerri Barber", "company": "Flexigen", "email": "barber@gmail.com", "mobile": "+46946652495", "areaOfInterests": ["Volvo V90"], "comments": "" }
+        ])
+      },
+      participants: {
+        gridData: ko.observableArray([
+          { isSelected : ko.observable(false), "person": "Grant Marshall", "company": "Grok", "email": "marshall@yahoo.com", "mobile": "+46238638789" },
+          { isSelected : ko.observable(false), "person": "Pena Valdez", "company": "Rotodyne", "email": "valdez@yahoo.com", "mobile": "+46706045578" },
+          { isSelected : ko.observable(false), "person": "Jessica Miles", "company": "Sensate", "email": "miles@mail.com", "mobile": "+46946652495" },
+          { isSelected : ko.observable(false), "person": "Kerri Barber", "company": "Flexigen", "email": "barber@gmail.com", "mobile": "+46946652495" }
+        ]),
+        countSelected : function() {
+          var count = 0;
+          ko.utils.arrayForEach(self.views.participants.gridData(), function(item) {
+              if (item.isSelected()) {
+                count++;
+              }
+          });
+          self.views.participants.isAnySelected(count > 0);
+          return true;
+        },
+        isAnySelected: ko.observable(false),
+        allSelected: ko.observable(false),
+        selectAll : function() {
+            var all = self.views.participants.allSelected();
+            ko.utils.arrayForEach(self.views.participants.gridData(), function(listItem) {
+              listItem.isSelected(!all); 
+            });
+            self.views.participants.countSelected();
+            self.views.participants.allSelected(!all);
+            return true;
+        },
+        activeTabIndex: ko.observable(0),
+        setActiveTab: function(index) {
+          self.views.participants.activeTabIndex(index);
+        },
+        toggleSelect: function(item) {
+          item.isSelected(!item.isSelected());
+        }
+      }
+    }
+
+    self.grids = {
+      data: {
+        interests: ko.observableArray(["Volvo XC60", "Leasing", "Volvo V60", "Volvo V90", "Volvo on call"]),
+        meetingsHeaders: ["Person", "Company", "Email", "Mobile"],
+        meetings: ko.observableArray([
+          { "person": "Grant Marshall", "company": "Grok", "email": "marshall@yahoo.com", "mobile": "+46238638789" },
+          { "person": "Pena Valdez", "company": "Rotodyne", "email": "valdez@yahoo.com", "mobile": "+46706045578" },
+          { "person": "Jessica Miles", "company": "Sensate", "email": "miles@mail.com", "mobile": "+46946652495" },
+          { "person": "Kerri Barber", "company": "Flexigen", "email": "barber@gmail.com", "mobile": "+46946652495" }
+        ])
+      },
+      inputValue: ko.observable(''),
+      addItem: function(arrayName) {
+        var inputText = self.grids.inputValue();
+        if (inputText) {
+          self.grids.data[arrayName].unshift(inputText);
+          self.grids.inputValue('');
+        }
+      },
+      removeItem: function(index, arrayName) {
+        self.grids.data[arrayName].splice(index, 1);
+      }
+    }
+  }
+
+
+
+
+
+  
+  window.viewModel = new exhibitionViewModel();
+  ko.applyBindings(window.viewModel);
+
+  console.log(window.viewModel);
+  </script>
+</body>
+</html>
