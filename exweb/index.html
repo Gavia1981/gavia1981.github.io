@@ -262,7 +262,6 @@
     article.participants nav a { margin: 0 1rem; }
     tbody td { font-size:80%; }
     .d-sm-none { display:none; }
-    .d-show-md { display:none !important; }
   }
 
   @media (max-width: 991.98px) {  
@@ -288,10 +287,6 @@
     th, td { padding: 0.5rem 0 0.5rem 1rem; vertical-align:top; }
   }
 
-  @media (min-width: 1200px) {  
-    .d-show-md { display:none !important; }
-    
-  }
   @media (max-width: 1599.98px) { 
     .tablewrapper.leads { display:none; }
   }
@@ -589,7 +584,7 @@
                     <b data-bind="text: company"></b>
                   </td>
                   <td>
-                    <a data-bind="attr: { 'href': 'mailto:' + email, 'title': email }"><span data-bind="text: email" class="d-sm-none d-show-md"></span><i class="fa fa-lg fa-envelope icon d-show-sm"></i></a>
+                    <a data-bind="attr: { 'href': 'mailto:' + email, 'title': email }"><span data-bind="text: email" class="d-sm-none"></span><i class="fa fa-lg fa-envelope icon d-show-sm"></i></a>
                     <a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }" class="d-show-sm"><i class="fa fa-lg fa-mobile-alt icon"></i></a>
                   </td>
                   <td class="d-sm-none"><a data-bind="attr: { 'href': 'tel:' + mobile, 'title': mobile }, text: mobile"></a></td>
