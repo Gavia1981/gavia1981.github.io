@@ -31,7 +31,6 @@
   .box-shadow { box-shadow: 0 3px 6px rgba(53, 108, 149, 0.07); }
   .cursor-pointer { cursor: pointer; }
 
-  /* .cursor-pointer:hover { color: var(--nav-tabs-active) !important; } */
 
   body { padding:0; margin:0; font-size: 16px; background-color: var(--ex-bg-main); }
   body * { font-family: 'Montserrat', sans-serif; }
@@ -48,102 +47,55 @@
   nav a .fa { margin-right:1rem; }
 
 
-  /*.expand-menu-button { font-size:1.5rem; position: absolute; top: 1rem; right: 1rem; color: var(--ex-bg-secondary); display: block; z-index:2000; cursor:pointer; }*/
-  .expand-menu-button { position: absolute; top: 30px; right: 40px; display:block; z-index:2000; cursor:pointer; }
-  .expand-menu-button.open { position: fixed !important; }
-  .box { border-radius: 2px; position: absolute; right: 0; top:0; }
-  .box .btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35px; cursor: pointer; }
+  /* HAMBURGER ICON */
+  button.expand-menu-button { position: absolute; width: 35px; top: 1rem; right: 1rem; display:block; z-index:2000; cursor:pointer; padding:0; margin:0 !important; border:none; background-color: transparent; outline: none; }
+  button.expand-menu-button.open { position: fixed !important; }
+  button.expand-menu-button span { display: block; width: 100%; border-radius: 3px; height: 4px; background:var(--ex-link); transition: all .3s; position: relative; }
+  button.expand-menu-button span + span { margin-top: 5px; }
+  button.expand-menu-button.open span:nth-child(1) { animation: ease .4s anim-top forwards; }
+  button.expand-menu-button.closed span:nth-child(1) { animation: ease .4s anim-top-2 forwards; }
+  button.expand-menu-button.open span:nth-child(2) { animation: ease .4s anim-scaled forwards; }
+  button.expand-menu-button.closed span:nth-child(2) { animation: ease .4s anim-scaled-2 forwards; }
+  button.expand-menu-button.open span:nth-child(3) { animation: ease .4s anim-bottom forwards; }
+  button.expand-menu-button.closed span:nth-child(3) { animation: ease .4s anim-bottom-2 forwards; }
 
-  .box span { display: block; width: 100%; border-radius: 3px; height: 4px; background:var(--ex-link); transition: all .3s; position: relative; }
+      /* ANIMATION OF HAMBURGER ICON
+      ** Beware of the variabel "--tm", used for position in the animation
+      **/
+      @keyframes anim-top {
+        0% { top: 0; transform: rotate(0); }
+        50% { top: var(--tm); transform: rotate(0); }
+        100% { top: var(--tm); transform: rotate(45deg); }
+      }
 
-.box span + span { margin-top: 5px; }
-.active span:nth-child(1) { animation: ease .4s top forwards; }
-.not-active span:nth-child(1) { animation: ease .4s top-2 forwards; }
-.active span:nth-child(2) { animation: ease .4s scaled forwards; }
-.not-active span:nth-child(2) { animation: ease .4s scaled-2 forwards; }
-.active span:nth-child(3) { animation: ease .4s bottom forwards; }
-.not-active span:nth-child(3) { animation: ease .4s bottom-2 forwards; }
+      @keyframes anim-top-2 {
+        0% { top: var(--tm); transform: rotate(45deg); }
+        50% { top: var(--tm); transform: rotate(0deg); }
+        100% { top: 0; transform: rotate(0deg); }
+      }
 
-@keyframes top {
-  0% {
-    top: 0;
-    transform: rotate(0);
-  }
-  50% {
-    top: var(--tm);
-    transform: rotate(0);
-  }
-  100% {
-    top: var(--tm);
-    transform: rotate(45deg);
-  }
-}
+      @keyframes anim-bottom {
+        0% { bottom: 0; transform: rotate(0); }
+        50% { bottom: var(--tm); transform: rotate(0); }
+        100% { bottom: var(--tm); transform: rotate(135deg); }
+      }
 
-@keyframes top-2 {
-  0% {
-    top: var(--tm);
-    transform: rotate(45deg);
-  }
-  50% {
-    top: var(--tm);
-    transform: rotate(0deg);
-  }
-  100% {
-    top: 0;
-    transform: rotate(0deg);
-  }
-}
+      @keyframes anim-bottom-2 {
+        0% { bottom: var(--tm); transform: rotate(135deg); }
+        50% { bottom: var(--tm); transform: rotate(0); }
+        100% { bottom: 0; transform: rotate(0); }
+      }
 
-@keyframes bottom {
-  0% {
-    bottom: 0;
-    transform: rotate(0);
-  }
-  50% {
-    bottom: var(--tm);
-    transform: rotate(0);
-  }
-  100% {
-    bottom: var(--tm);
-    transform: rotate(135deg);
-  }
-}
+      @keyframes anim-scaled {
+        50% { transform: scale(0); }
+        100% { transform: scale(0); }
+      }
 
-@keyframes bottom-2 {
-  0% {
-    bottom: var(--tm);
-    transform: rotate(135deg);
-  }
-  50% {
-    bottom: var(--tm);
-    transform: rotate(0);
-  }
-  100% {
-    bottom: 0;
-    transform: rotate(0);
-  }
-}
-
-@keyframes scaled {
-  50% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-
-@keyframes scaled-2 {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+      @keyframes anim-scaled-2 {
+        0% { transform: scale(0); }
+        50% { transform: scale(0); }
+        100% { transform: scale(1); }
+      }
 
   
 
@@ -151,12 +103,12 @@
   /* MAIN CONTENT AND VIEWS */
   section.page.hidden { display: none !important; }
 
-  section.page.login { display: grid; justify-items: stretch; align-items: stretch; grid-template-columns: 1fr 1fr; grid-template-areas: "form welcome"; height:100%; }
-  section.page.login article.login-welcome { background-color: var(--ex-bg-main); }
-  section.page.login article.login { background-color: #fff; }
+  section.page.login { display: grid; justify-items: stretch; align-items: stretch; grid-template-columns: 1fr 1fr; height:100%; }
+  section.page.login article.login-welcome { background-color: var(--ex-bg-main); grid-column: 2; }
+  section.page.login article.login { background-color: #fff; grid-column:1; }
   section.page.login article { display: flex; justify-content: center; align-items: center; }
-  section.page.login h4 { text-align:center; color: #C3D2E1; margin:0; }
-  section.page.login h1 { text-align:center; color: #C3D2E1; font-size: 4rem; margin: 0 0 2rem; }
+  section.page.login h4 { text-align:center; color: #a2b4c6; margin:2rem 0 0; }
+  section.page.login h1 { text-align:center; color: #a2b4c6; font-size: 4rem; margin: 0 0 2rem; }
   section.page.login .circle { background-color:#fff; border-radius:50%; min-width:20rem; min-height: 20rem; max-width: 20rem; margin: 0 auto; }
 
   section.page.portal { display: grid; justify-items: stretch; align-items: stretch; grid-template-columns: 360px auto; height:100%; }
@@ -175,7 +127,7 @@
 
   article.view.inactive { display:none; }
 
-  article.participants nav { border-bottom:1px solid #E0E7EE; display:flex; }
+  article.participants nav { border-bottom:1px solid var(--ex-table-bordercolor); display:flex; }
   article.participants nav a { color:#AAB7C4; border-bottom:3px solid transparent; margin: 0 0 0 2rem; padding:1rem 0.25rem; }
   article.participants nav a.active { color:var(--nav-tabs-active) !important; border-bottom:3px solid var(--nav-tabs-active); background-color: #fff !important; }
 
@@ -188,17 +140,17 @@
   button.badge { background-color:#37526D; }
   button.meetings { background-color: #EE7365; }
   button.add { margin-left:1rem; }
-  button.checkbox { margin:0 !important; padding: 0; display: inline; background-color: transparent; color: #768594; cursor: pointer; }
+  button.checkbox { height:1rem; width: 1.2rem; margin:0 !important; padding: 0; display: inline-block; background-color: transparent; color: #768594; cursor: pointer; }
   
-  ::-webkit-input-placeholder { color:#B4C4D4; }
+  ::-webkit-input-placeholder { color:var(--ex-table-headercolor); }
 
   .form-add { display:flex; }
   .form-add input::-webkit-input-placeholder { color: #D5D5D5; }
-  .form-search { color:#B4C4D4; background-color: #F1F5F9; display:flex; align-items: baseline; border-radius: 5px; margin: 0 1rem 1rem 0; }
+  .form-search { color:var(--ex-table-headercolor); background-color: #F1F5F9; display:flex; align-items: baseline; border-radius: 5px; margin: 0 1rem 1rem 0; }
   .form-search input { background-color: transparent; }
   .form-search .fa { margin-left:1rem; }
 
-  .login-form { width: 475px; }
+  .login-form { width: 25rem; margin:1.5rem; }
   .login-form label { color:#C3D2E1; margin-bottom: 0.25rem; display: block; font-size: 1.2rem; }
   .login-form input { border:3px solid #C3D2E1; }
 
@@ -230,6 +182,7 @@
   .card footer a:hover { color: var(--nav-tabs-active); }
   .card footer a:last-child { border-right: none; }
 
+  .cards.users { margin-top:1.5rem; }
   .card.user { flex: 1 0 0%; display:flex; flex-direction: column; background-color: #fff; }
   .card.user header { padding:1rem; color:#fff } 
   .card.user h4 { margin:0; }
@@ -250,6 +203,8 @@
   /* TABLES */
   .tablecontent { background-color: #fff; border-radius: 5px; }
   table  { width: 100%; border-spacing: 0; border-collapse: collapse; }
+  table.leads th { padding: 1rem 0 1rem 1.5rem; }
+  table.leads td { padding: 0.5rem 0 0.5rem 1.5rem; }
   th, td { padding: 1rem 0 1rem 2rem; }
   th { border-bottom:2px solid var(--ex-table-bordercolor); color:var(--ex-table-headercolor); font-size:80%; font-weight:normal; text-align: left; }
   th.th-checkbox { width:1%; }
@@ -271,7 +226,12 @@
       .d-show-sm { display: none !important; }
   }
 
+  @media (max-width: 576px) { 
+    .login-form { width: auto; margin:0 1rem; }
+  }
+
   @media (max-width: 767.98px) { 
+    main { padding: 1rem !important; }
     .cards { grid-template-columns: 1fr; }
     section.page.portal  { grid-template-columns: 1fr !important; }
     aside { -webkit-animation: slide-out-left 0.5s ease-in-out both;
@@ -280,9 +240,6 @@
       -webkit-animation: slide-in-left 0.5s ease-in-out both;
 	        animation: slide-in-left 0.5s ease-in-out both;
     }
-    button { display:block; width:100%; margin:1rem 0 0 !important; }
-    .form-add  { flex-wrap:wrap; }
-    .form-search { margin:0; width: 100%; max-width: 100%; }
     @-webkit-keyframes slide-in-left {
       0% { -webkit-transform: translateX(-1000px); transform: translateX(-1000px); opacity: 0; }
       100% { -webkit-transform: translateX(0); transform: translateX(0); opacity: 1; }
@@ -295,29 +252,51 @@
       100% { -webkit-transform: translateX(-1000px); transform: translateX(-1000px); opacity: 0; }
       0% { -webkit-transform: translateX(0); transform: translateX(0); opacity: 1; }
     }
+    nav a { padding: 0.75rem !important;  }
+    nav a .fa { margin: 0 0 0.25rem; }
+    button { display:block; width:100%; margin:1rem 0 0 !important; }
+    .form-add  { flex-wrap:wrap; }
+    .form-search { margin:0; width: 100%; max-width: 100%; }
+    .form-row.inline { padding:1rem;}
+    
+    article.participants nav a { margin: 0 1rem; }
     tbody td { font-size:80%; }
     .d-sm-none { display:none; }
     .d-show-md { display:none !important; }
   }
 
   @media (max-width: 991.98px) {  
+    section.page.login { grid-template-columns:1fr; grid-template-rows: max-content 1fr; height:100%; }
+    section.page.login article.login-welcome { grid-column:1; grid-row:1; align-items: flex-end; }
+    section.page.login article.login { background-color: var(--ex-bg-main); grid-row:2; grid-column:1; align-items: flex-start; }
+    section.page.login .circle { display:none; }
+    section.page.login h4 { margin:2rem 0 0; }
     section.page.login { grid-template-columns: 1fr !important; }
-    main { padding: 1.5rem !important; }
     article.app { grid-template-columns: 1fr; grid-template-areas: "text"; grid-gap: 0rem; }
     article.app section.image { display:none; }
     .form-search input { width:100%; }
+    
   }
 
   @media (max-width: 1199.98px) {  
-    main { padding: 2rem; }
+    main { padding: 1.5rem; }
     nav a { padding: 1rem; text-align: center; font-size: 0.8rem; }
     nav a .fa { display: block; font-size: 1.5rem; margin: 0 0 0.5rem; }
     section.page.portal { grid-template-columns: 200px auto; }
+    section.page.login h1 { font-size: 2.5rem; margin: 0 0 2rem; }
+    section.page.login .circle { min-width: 15rem; max-width: 15rem; min-height: 15rem; }
     th, td { padding: 0.5rem 0 0.5rem 1rem; vertical-align:top; }
   }
 
   @media (min-width: 1200px) {  
     .d-show-md { display:none !important; }
+    
+  }
+  @media (max-width: 1599.98px) { 
+    .tablewrapper.leads { display:none; }
+  }
+  @media (min-width: 1600px) { 
+    .cards.users.leads { display:none; }
   }
   </style>
 </head>
@@ -350,15 +329,11 @@
 
   <!-- MAIN APP CONTENT -->
   <section class="page portal" data-bind="css: { 'hidden': $root.views.login.active() }">
-    <a href="#" class="expand-menu-button" data-bind="click: function() { $root.menu.navExpanded(!$root.menu.navExpanded()) }, css: { 'open': $root.menu.navExpanded() }">
-        <div class="box">
-          <div class="btn" data-bind="css : { 'active': $root.menu.navExpanded(), 'not-active': !$root.menu.navExpanded() }">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </a>
+    <button type="button" class="expand-menu-button" data-bind="click: function() { $root.menu.navExpanded(!$root.menu.navExpanded()) }, css: { 'open': $root.menu.navExpanded(), 'closed': !$root.menu.navExpanded() }">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <!-- Left column -->
     <aside data-bind="css: { 'expanded' : $root.menu.navExpanded }">
       <h1>
@@ -484,52 +459,22 @@
       <article class="view leads" data-bind="css: { 'inactive': $root.menu.activeView() !== 'leads' }">
           <h2>Leads</h2>
           <p class="lead">All of your leads from the exhibition scanning.</p>
-          <div class="cards users" data-bind="foreach: views.leads.gridData">
-            <article class="card user box-shadow">
-                <header class="cardimage gradient blue">
-                  <h4>
-                    <span data-bind="text: person"></span>
-                    <small data-bind="text: ' | ' + company" class="company-name"></small>
-                  </h4>
-                  <address>
-                      <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a><br>
-                      <span data-bind="text: mobile" class="value"></span>
-                  </address>
-                </header>
-                <div class="card-body">
-                  <div>
-                      <span data-bind="text: $root.views.settings.headers['areaOfInterests']" class="label"></span>
-                      <span data-bind="foreach: areaOfInterests">
-                        <strong data-bind="text: $data" class="aoi-badge"></strong>
-                      </span>
-                  </div>
-                  <div data-bind="visible: comments">
-                      <span data-bind="text: $root.views.settings.headers['comments']" class="label"></span>
-                      <em data-bind="text: comments || '&nbsp;-'" class="comment"></em>
-                  </div>
-                </div>
-                <footer style="text-align: right;">
-                    <small data-bind="text: $root.views.settings.headers['scanned'] + ':' + scanned" style="color:#ccc;"></small>
-                </footer>
-            </article>
-          </div>
           <section class="box-shadow tablecontent">
             <div class="form-row inline">
               <div class="form-search">
                 <i class="fa fa-search"></i>
                 <input type="text" placeholder="Search for lead"/>
               </div>
-              <a href="#">Download Excel</a>
+              <button type="button">Download Excel</button>
             </div>
-            <div class="tablewrapper d-sm-none">
-              <table>
+            <div class="tablewrapper leads">
+              <table class="leads">
                 <thead>
                   <tr>
                     <th>Scanned</th>
                     <th>Company</th>
                     <th>Person</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
+                    <th>Contact</th>
                     <th>Area of interest</th>
                     <th>Comments</th>
                   </tr>
@@ -537,33 +482,24 @@
                 <tbody data-bind="foreach: views.leads.gridData">
                   <tr>
                     <td>
-                      <span data-bind="text: $root.views.settings.headers['scanned']" class="label"></span>
                       <span data-bind="text: scanned" class="value"></span>
                     </td>
                     <td>
-                        <span data-bind="text: $root.views.settings.headers['company']" class="label"></span>
                       <b data-bind="text: company" class="value"></b>
                     </td>
                     <td>
-                      <span data-bind="text: $root.views.settings.headers['person']" class="label"></span>
                       <span data-bind="text: person" class="value"></span>
                     </td>
                     <td>
-                      <span data-bind="text: $root.views.settings.headers['email']" class="label"></span>
-                      <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a>
+                      <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a><br>
+                      <a data-bind="text: mobile, attr: { 'href': 'tel:' + mobile }" class="value"></a>
                     </td>
                     <td>
-                      <span data-bind="text: $root.views.settings.headers['mobile']" class="label"></span>
-                      <span data-bind="text: mobile" class="value"></span>
-                    </td>
-                    <td>
-                      <span data-bind="text: $root.views.settings.headers['areaOfInterests']" class="label"></span>
                       <span data-bind="foreach: areaOfInterests">
                           <strong data-bind="text: $data" class="aoi-badge"></strong>
                         </span>
                     </td>
                     <td>
-                      <span data-bind="text: $root.views.settings.headers['comments']" class="label"></span>
                       <span data-bind="text: comments || '&nbsp;-'" class="value"></span>
                     </td>
                   </tr>
@@ -574,6 +510,35 @@
               </footer>
             </div>
           </section>
+          <div class="cards users leads" data-bind="foreach: views.leads.gridData">
+              <article class="card user box-shadow">
+                  <header class="cardimage gradient blue">
+                    <h4>
+                      <span data-bind="text: person"></span>
+                      <small data-bind="text: ' | ' + company" class="company-name"></small>
+                    </h4>
+                    <address>
+                        <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a><br>
+                        <span data-bind="text: mobile" class="value"></span>
+                    </address>
+                  </header>
+                  <div class="card-body">
+                    <div>
+                        <span data-bind="text: $root.views.settings.headers['areaOfInterests']" class="label"></span>
+                        <span data-bind="foreach: areaOfInterests">
+                          <strong data-bind="text: $data" class="aoi-badge"></strong>
+                        </span>
+                    </div>
+                    <div data-bind="visible: comments">
+                        <span data-bind="text: $root.views.settings.headers['comments']" class="label"></span>
+                        <em data-bind="text: comments || '&nbsp;-'" class="comment"></em>
+                    </div>
+                  </div>
+                  <footer style="text-align: right;">
+                      <small data-bind="text: $root.views.settings.headers['scanned'] + ':' + scanned" style="color:#ccc;"></small>
+                  </footer>
+              </article>
+            </div>
         </article>
       <article class="view participants" data-bind="css: { 'inactive': $root.menu.activeView() !== 'participants' }">
           <h2>Your participants</h2>
@@ -602,11 +567,9 @@
                   <th>
                     <span class="d-sm-none">Company</span>
                     <span class="d-show-sm">Person, Company</span>
-                    <span class="d-show-md">Person, Company</span>
                   </th>
                   <th>
                     <span class="d-show-sm">Contact</span>
-                    <span class="d-show-md">Contact</span>
                     <span class="d-sm-none">Email</span>
                   </th>
                   <th class="d-sm-none">Mobile</th>
