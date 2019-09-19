@@ -140,7 +140,7 @@
   button.badge { background-color:#37526D; }
   button.meetings { background-color: #EE7365; }
   button.add { margin-left:1rem; }
-  button.checkbox { height:1rem; width: 1.2rem; padding:3px; margin:0 !important; padding: 0; display: inline-block; background-color: transparent; color: #768594; cursor: pointer; }
+  button.checkbox { height:1rem; width: 1.2rem; padding:1px; margin:0 !important; display: inline-block; background-color: transparent; color: #768594; cursor: pointer; }
   
   ::-webkit-input-placeholder { color:var(--ex-table-headercolor); }
 
@@ -187,7 +187,7 @@
   .card.user header { padding:1rem; color:#fff } 
   .card.user h4 { margin:0; }
   .card.user h4 .company-name { text-transform: uppercase; font-weight: 100; color: #fff; }
-  .card.user address { color:rgba(255,255,255,0.6); font-size:80%; }
+  .card.user address { color:rgba(255,255,255,0.6); font-size:80%; font-style:normal; }
   .card.user address a { color:rgba(255,255,255,0.6); }
   .card.user .label { display:block; color:var(--ex-table-headercolor); font-size: 70%; margin: 0.5rem 0 0.25rem; }
   .card.user .value { font-weight: 500; }
@@ -519,7 +519,7 @@
                     </h4>
                     <address>
                         <a data-bind="text: email, attr: { 'href': 'mailto:' + email }" class="value"></a><br>
-                        <span data-bind="text: mobile" class="value"></span>
+                        <a data-bind="text: mobile, attr: { 'href': 'tel:' + mobile }" class="value"></a>
                     </address>
                   </header>
                   <div class="card-body">
