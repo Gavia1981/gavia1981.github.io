@@ -137,6 +137,7 @@
   .form-row.inline { display: flex; align-items: baseline; margin-bottom:0; padding:2rem; flex-wrap:wrap; }
   input { font-size: 1rem; width:100%; border:0; padding:1rem; background-color:#fff; border-radius: 5px; font-weight: 500; }
   button { font-size: 1rem; cursor:pointer; border: 0; color: #fff; padding:1rem 2.5rem; background-color: #79B86A; border-radius: 5px; white-space: nowrap; font-weight: 500; }
+  button:focus { text-shadow: 1px 1px 1px rgba(0,0,0,0.2), 0 0 3px rgba(0,0,0,0.5), 0 0 8px rgba(0,0,0,0.2); }
   button.login { background-color: #657EC4; float: right; }
   button.badge { background-color:#37526D; }
   button.meetings { background-color: #EE7365; }
@@ -149,7 +150,7 @@
   .form-add input::-webkit-input-placeholder { color: #D5D5D5; }
   .form-search { color:var(--ex-table-headercolor); display:flex; align-items: baseline; position:relative; border-radius: 5px; margin: 0 1rem 1rem 0; }
   .form-search input { background-color: #F1F5F9; padding-left:3rem; }
-  .form-search .fa { margin-left:1rem; position:absolute; left:0; top: calc(50% - 0.5rem); }
+  .form-search .fa { margin-left:1rem; position:absolute; left:0; top: calc(50% - 0.55rem); }
 
   .login-form { width: 25rem; margin:1.5rem; }
   .login-form label { color:#C3D2E1; margin-bottom: 0.25rem; display: block; font-size: 1.2rem; }
@@ -159,10 +160,12 @@
   /* GRIDS */
   .grid { margin:0; padding:0; }
   .grid li { display: flex; align-items: baseline; border-radius:5px; list-style-type: none; margin:0 0 0.5rem; padding:1rem; background-color:#fff; color:var(--grid-text); font-weight: 600; }
-  .grid.sortable li { cursor:move; }
   .grid li .text { flex-grow: 1!important; }
-  .grid li .fa { color:var(--grid-icon); margin-right:1rem; }
-  .grid li .fa:last-child { margin-right:0rem; }
+  .grid li a { color:var(--grid-icon); margin-right:1rem; }
+  .grid li a:last-child { margin-right:0rem; }
+  .grid li a:hover,
+  .grid li a:focus { color: var(--nav-tabs-active); }
+  .grid li input { margin: -1rem 1rem -1rem -1rem; }
 
   /* CARDS */
   .cards { display: grid; grid-gap: 2rem; justify-items: stretch; align-items: stretch; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
@@ -220,6 +223,7 @@
   tbody tr.checked td { background-color: var(--ex-bg-main); }
   tfoot td { color:var(--ex-table-headercolor); font-size:80%; text-align: center; border: none; }
   footer.tablefoot { padding:1rem; color: var(--ex-table-headercolor); font-size:80%; text-align: center; border: none; }
+  footer.tablefoot span { font-weight: 500; }
 
 
   /* RESPONSIVE STUFF */
@@ -351,15 +355,19 @@
           <h2>Areas of interest</h2>
           <p class="lead">Associate your visitors with the area they are interested in.</p>
           <div class="form-row form-add">
-            <input type="text" placeholder="Enter an area of interests" data-bind="value: $root.grids.inputValue" class="box-shadow"/>
-            <button type="button" data-bind="click: function() { $root.grids.addItem('interests') }" class="add">Add area</button>
+            <input type="text" placeholder="Enter an area of interests" data-bind="value: $root.views.interests.inputValue" class="box-shadow"/>
+            <button type="button" data-bind="click: function() { $root.views.interests.addItem('interests') }" class="add">Add area</button>
           </div>
-          <ul class="grid sortable" data-bind="foreach: grids.data.interests">
+          <ul class="grid" data-bind="foreach: views.interests.gridData">
             <li class="box-shadow">
-              <i class="fa fa-arrows-alt-v"></i>
-              <span data-bind="text: $data" class="text"></span>
-              <i class="fa fa-edit"></i>
-              <i class="fa fa-trash-alt cursor-pointer" data-bind="click: function() { $root.grids.removeItem($index(), 'interests') }"></i>
+              <!-- ko if: isEdited -->
+              <input type="text" data-bind="textInput: name, hasSelectedFocus: isEdited, event: {keypress: $root.views.interests.enterSearch }">
+              <!-- /ko -->
+              <!-- ko if: !isEdited() -->
+              <span data-bind="text: name" class="text"></span>
+              <!-- /ko -->
+              <a href="#" data-bind="click: function() { $root.views.interests.toggleEdit(this) }"><i class="fa fa-edit cursor-pointer"></i></a>
+              <a href="#" data-bind="click: function() { $root.views.interests.removeItem($index()) }"><i class="fa fa-trash-alt cursor-pointer"></i></a>
             </li>
           </ul>
         </section>
@@ -428,12 +436,12 @@
             </thead>
             <tbody data-bind="foreach: views.meetings.gridData">
               <tr data-bind="css: { 'checked' : isSelected }">
-                <td class="align-middle" data-bind="click: function() { $root.views.meetings.toggleSelect(this); $root.views.meetings.countSelected() }" class="cursor-pointer">
+                <td class="align-middle cursor-pointer" data-bind="click: function() { $root.views.meetings.toggleSelect(this); $root.views.meetings.countSelected() }" class="cursor-pointer">
                   <button type="button" class="checkbox" aira-label="Select row">
                     <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
                   </button>
                 </td>
-                <td data-bind="text: timeslot"></td>
+                <td data-bind="text: timeslot" class="align-middle"></td>
                 <td>
                   <span class="d-show-sm" data-bind="text: person"></span>
                   <br class="d-show-sm">
@@ -449,7 +457,7 @@
             </tbody>
           </table>
           <footer class="tablefoot">
-              Showing 21 of 21 entries
+              Showing <span data-bind="text: views.meetings.gridData().length"></span> of <span data-bind="text: views.meetings.gridData().length"></span> entries
           </footer>
         </section>
       </article>
@@ -503,7 +511,7 @@
                 </tbody>
               </table>
               <footer class="tablefoot">
-                  Showing 21 of 21 entries
+                  Showing <span data-bind="text: views.leads.gridData().length"></span> of <span data-bind="text: views.leads.gridData().length"></span> entries
               </footer>
             </div>
           </section>
@@ -574,7 +582,7 @@
               </thead>
               <tbody data-bind="foreach: views.participants.gridData">
                 <tr data-bind="css: { 'checked' : isSelected }">
-                  <td class="align-middle" data-bind="visible: $root.views.participants.activeTabIndex() === 0, click: function() { $root.views.participants.toggleSelect(this); $root.views.participants.countSelected() }" class="cursor-pointer">
+                  <td class="align-middle cursor-pointer" data-bind="visible: $root.views.participants.activeTabIndex() === 0, click: function() { $root.views.participants.toggleSelect(this); $root.views.participants.countSelected() }" class="cursor-pointer">
                     <button type="button" class="checkbox" aira-label="Select row">
                       <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
                     </button>
@@ -594,7 +602,7 @@
               </tbody>
             </table>
             <footer class="tablefoot">
-                Showing 21 of 21 entries
+                Showing <span data-bind="text: views.participants.gridData().length"></span> of <span data-bind="text: views.participants.gridData().length"></span> entries
             </footer>
           </section>
         </article>
@@ -642,6 +650,38 @@
         active: ko.observable(true),
         toggleActive: function() {
           self.views.login.active(!self.views.login.active());
+        }
+      },
+      interests: {
+        gridData: ko.observableArray([
+          { isEdited: ko.observable(false), name: "Volvo XC60" },
+          { isEdited: ko.observable(false), name: "Leasing" },
+          { isEdited: ko.observable(false), name: "Volvo V60" },
+          { isEdited: ko.observable(false), name: "Volvo V90" },
+          { isEdited: ko.observable(false), name: "Volvo on call" }
+        ]),
+        inputValue: ko.observable(''),
+        toggleEdit: function(item) {
+          item.isEdited(!item.isEdited());
+        },
+        addItem: function(arrayName) {
+          var inputText = self.views.interests.inputValue();
+          if (inputText) {
+            self.views.interests.gridData.unshift({ 
+              isEdited: ko.observable(false), 
+              name: inputText 
+            });
+            self.views.interests.inputValue('');
+          }
+        },
+        removeItem: function(index) {
+          self.views.interests.gridData.splice(index, 1);
+        },
+        enterSearch: function(item, event) {
+          if (event.keyCode === 13) {
+            item.isEdited(false);
+          }
+          return true;
         }
       },
       meetings: {
@@ -748,10 +788,17 @@
     }
   }
 
+  ko.bindingHandlers.hasSelectedFocus = {
+    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        ko.bindingHandlers['hasfocus'].init(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext);
+    },        
+    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        ko.bindingHandlers['hasfocus'].update(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext);        
 
-
-
-
+        var selected = ko.utils.unwrapObservable(valueAccessor());
+        if (selected) element.select();
+    }
+  };
   
   window.viewModel = new exhibitionViewModel();
   ko.applyBindings(window.viewModel);
