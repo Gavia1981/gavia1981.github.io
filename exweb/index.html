@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -445,7 +446,7 @@
               <tr data-bind="css: { 'checked' : isSelected }">
                 <td class="align-middle cursor-pointer" data-bind="click: function() { $root.views.meetings.toggleSelect(this); $root.views.meetings.countSelected() }" class="cursor-pointer">
                   <button type="button" class="checkbox" aira-label="Select row">
-                    <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
+                    <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td data-bind="text: timeslot" class="align-middle"></td>
@@ -563,7 +564,7 @@
             <div class="form-row inline">
               <div class="form-search">
                 <i class="fa fa-search"></i>
-                <input type="text" placeholder="Search for participants"/>
+                <input type="text" placeholder="Search for participants" label="Search for participants"/>
               </div>
               <button type="button" class="badge" data-bind="visible: $root.views.participants.isAnySelected">Show badge</button>
             </div>
@@ -591,7 +592,7 @@
                 <tr data-bind="css: { 'checked' : isSelected }">
                   <td class="align-middle cursor-pointer" data-bind="visible: $root.views.participants.activeTabIndex() === 0, click: function() { $root.views.participants.toggleSelect(this); $root.views.participants.countSelected() }" class="cursor-pointer">
                     <button type="button" class="checkbox" aira-label="Select row">
-                      <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }"></i>
+                      <i class="fa-lg" data-bind="css: { 'fa fa-check-square' : isSelected, 'far fa-square': !isSelected() }" aria-hidden="true"></i>
                     </button>
                   </td>
                   <td class="d-sm-none" data-bind="text: person"></td>
