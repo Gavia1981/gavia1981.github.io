@@ -308,12 +308,12 @@
     <article class="login">
       <div class="login-form">
         <div class="form-row">
-          <label>Username</label>
-          <input type="text">
+          <label for="username">Username</label>
+          <input type="text" id="username">
         </div>
         <div class="form-row">
-          <label>Password</label>
-          <input type="password">
+          <label for="password">Password</label>
+          <input type="password" id="password">
         </div>
         <button type="button" class="login" data-bind="click: function() { $root.views.login.toggleActive() }">Login</button>
       </div>
@@ -330,7 +330,10 @@
 
   <!-- MAIN APP CONTENT -->
   <section class="page portal" data-bind="css: { 'hidden': $root.views.login.active() }">
-    <button type="button" class="expand-menu-button" data-bind="click: function() { $root.menu.navExpanded(!$root.menu.navExpanded()) }, css: { 'open': $root.menu.navExpanded(), 'closed': !$root.menu.navExpanded() }">
+    <button type="button" class="expand-menu-button" 
+      aria-label="Show/hide menu"
+      aria-haspopup="true" 
+      data-bind="click: function() { $root.menu.navExpanded(!$root.menu.navExpanded()) }, css: { 'open': $root.menu.navExpanded(), 'closed': !$root.menu.navExpanded() }, attr: { 'aria-expanded': $root.menu.navExpanded() }">
       <span></span>
       <span></span>
       <span></span>
@@ -343,7 +346,7 @@
       </h1>
       <nav data-bind="foreach: menu.items">
         <a href="#" data-bind="click: function() { $root.menu.setActiveItem($index(), view) }, css: { 'active': $index() === $root.menu.activeItemIndex() }">
-          <i class="fa" data-bind="class : icon"></i> 
+          <i class="fa" data-bind="class : icon" aria-hidden="true"></i> 
           <span data-bind="text: text" class="text"></span>
         </a>
       </nav>
@@ -355,24 +358,28 @@
           <h2>Areas of interest</h2>
           <p class="lead">Associate your visitors with the area they are interested in.</p>
           <div class="form-row form-add">
-            <input type="text" placeholder="Enter an area of interests" data-bind="value: $root.views.interests.inputValue" class="box-shadow"/>
+            <input type="text" placeholder="Enter an area of interests" aria-label="Enter an area of interests" data-bind="value: $root.views.interests.inputValue" class="box-shadow"/>
             <button type="button" data-bind="click: function() { $root.views.interests.addItem('interests') }" class="add">Add area</button>
           </div>
           <ul class="grid" data-bind="foreach: views.interests.gridData">
             <li class="box-shadow">
               <!-- ko if: isEdited -->
-              <input type="text" data-bind="textInput: name, hasSelectedFocus: isEdited, event: {keypress: $root.views.interests.enterSearch }">
+              <input type="text" data-bind="textInput: name, hasSelectedFocus: isEdited, event: { keypress: $root.views.interests.enterSearch }" aria-label="Edit current area of interest">
               <!-- /ko -->
               <!-- ko if: !isEdited() -->
               <span data-bind="text: name" class="text"></span>
               <!-- /ko -->
-              <a href="#" data-bind="click: function() { $root.views.interests.toggleEdit(this) }"><i class="fa fa-edit cursor-pointer"></i></a>
-              <a href="#" data-bind="click: function() { $root.views.interests.removeItem($index()) }"><i class="fa fa-trash-alt cursor-pointer"></i></a>
+              <a href="#" data-bind="click: function() { $root.views.interests.toggleEdit(this) }" aria-label="Edit current area of interest">
+                <i class="fa fa-edit cursor-pointer" aria-hidden="true"></i>
+              </a>
+              <a href="#" data-bind="click: function() { $root.views.interests.removeItem($index()) }" aria-label="Delete current area of interest">
+                <i class="fa fa-trash-alt cursor-pointer" aria-hidden="true"></i>
+              </a>
             </li>
           </ul>
         </section>
         <section class="image">
-          <img src="phone.gif" />
+          <img src="phone.gif" alt="Animerad bild som visar exempel på en registrering" />
         </section>
       </article>
       <article class="view links" data-bind="css: { 'inactive': $root.menu.activeView() !== 'links' }">
@@ -386,8 +393,8 @@
             </div>
             <footer>
               <a href="#"><i class="fa fa-user-plus"></i></a>
-              <a href="#" tooltip tooltip-bottom tooltip-content="Copy link"><i class="fa fa-link"></i></a>
-              <a href="#" tooltip tooltip-bottom tooltip-content="Send email"><i class="fa fa-envelope"></i></a>
+              <a href="#" tooltip tooltip-bottom tooltip-content="Copy link" aria-label="Copy link"><i class="fa fa-link" aria-hidden="true"></i></a>
+              <a href="#" tooltip tooltip-bottom tooltip-content="Send email" aria-label="Send email"><i class="fa fa-envelope" aria-hidden="true"></i></a>
             </footer>
           </div>
           <div class="card links box-shadow">
@@ -396,8 +403,8 @@
               <i class="fa fa-user"></i>
             </div>
             <footer>
-              <a href="#"><i class="fa fa-link"></i></a>
-              <a href="#"><i class="fa fa-envelope"></i></a>
+              <a href="#" aria-label="Copy link"><i class="fa fa-link" aria-hidden="true"></i>></i></a>
+              <a href="#" aria-label="Send email"><i class="fa fa-envelope" aria-hidden="true"></i>></i></a>
             </footer>
           </div>
         </div>
@@ -408,8 +415,8 @@
         <section class="box-shadow tablecontent">
           <div class="form-row inline">
             <div class="form-search">
-              <i class="fa fa-search"></i>
-              <input type="text" placeholder="Search for meeting"/>
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <input type="text" placeholder="Search for meeting" aria-label="Search for meeting"/>
             </div>
             <button type="button" class="meetings" data-bind="visible: $root.views.meetings.isAnySelected">Cancel meetings</button>
           </div>
@@ -467,8 +474,8 @@
           <section class="box-shadow tablecontent">
             <div class="form-row inline">
               <div class="form-search">
-                <i class="fa fa-search"></i>
-                <input type="text" placeholder="Search for lead"/>
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search for lead" aria-label="Search for lead"/>
               </div>
               <button type="button">Download Excel</button>
             </div>
