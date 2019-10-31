@@ -213,18 +213,20 @@
     <div id="menu">
       <h2>Inställningar</h2>
       <fieldset>
-          <legend>Trippus logo färg</legend>
+          <legend>Trippus logo</legend>
           <!-- ko foreach: settings.logoColors -->
           <label><input type="radio" name="logo-color" data-bind="value: value, checked: $root.settings.activeColor, event: { change : $root.settings.onColorChange }">&nbsp;<span data-bind="text: name"></span></label>
           <!-- /ko -->
+
+          <div data-bind="visible: $root.settings.activeColor()">
+              <br><strong>Position</strong><br>
+              <!-- ko foreach: settings.logoPositions -->
+              <label><input type="radio" name="logo-position" data-bind="value: value, checked: $root.settings.activeLogoPosition, event: { change : $root.settings.onLogoPositionChange }">&nbsp;<span data-bind="text: name"></span></label>
+              <!-- /ko -->
+          </div>
       </fieldset>
 
-      <fieldset>
-          <legend>Trippus logo position</legend>
-          <!-- ko foreach: settings.logoPositions -->
-          <label><input type="radio" name="logo-position" data-bind="value: value, checked: $root.settings.activeLogoPosition, event: { change : $root.settings.onLogoPositionChange }">&nbsp;<span data-bind="text: name"></span></label>
-          <!-- /ko -->
-      </fieldset>
+
 
       <fieldset>
           <legend>Bokningsrutans storlek</legend>
