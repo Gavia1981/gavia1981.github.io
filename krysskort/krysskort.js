@@ -1,8 +1,9 @@
 var krysskort = {
     loadSpeciesList: function() {
-        fetch("specieslist.json")
-            .then(response => response.json())
-            .then(json => console.log(json));
+        const response = await fetch('specieslist.json');
+        const myJson = await response.json();
+        console.log(myJson);
+        console.log("now!");
     }
 };
 krysskort.loadSpeciesList();
