@@ -2,6 +2,7 @@
     var krysskort = {
         lookupData: [],
         listData: [],
+        renderData: {},
         loadLookupData: function() {
             var url = "https://cdn.jsdelivr.net/gh/Gavia1981/gavia1981.github.io/krysskort/specieslist.json";
             fetch(url)
@@ -32,7 +33,7 @@
             krysskort.render();
         },
         render: function() {
-            var $styles = `
+            var $styles = krysskort.renderData.$styles = `
             <style type="text/css">
             html {
                 font-size:14px;
@@ -131,9 +132,9 @@
             </style>
             `;
 
-            var $renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
+            var $renderDiv = krysskort.renderData.$renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
             $renderDiv.find("b").click(function(e) {
-                $renderDiv.hide();
+                krysskort.destroy();
             });
             var $ul = $("<ul class='grid-size-70'/>");
 
@@ -160,12 +161,16 @@
                 listHtmlBonus = "<li class='bonus'>BONUSARTER (" + bonusCount + ")</li>" + listHtmlBonus;
             }
 
-
             $(document.body).append($styles);
             $ul.append(listHtml).append(listHtmlBonus);
             $renderDiv.append($ul);
 
         }, 
+        destroy: function() {
+            krysskort.renderData.$styles.remove();
+            krysskort.renderData.$renderDiv.remove();
+            krysskort = {};
+        },
         init: function() {
             if ($("#specieslistwrapper").length) {
                 krysskort.loadLookupData();
