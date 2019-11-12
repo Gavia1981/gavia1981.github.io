@@ -63,11 +63,17 @@
                 border: 0 solid silver;
                 border-width: 0 0 1px 1px;
                 padding: 0;
-                margin: 0;
+                margin: 3rem;
                 display: grid;
                 grid-auto-flow: column;
-                grid-template-rows: repeat(70, 1fr);
+                grid-template-rows: repeat(50, 1fr);
                 list-style-type: none;
+            }
+            #render ul.grid-size-70 {
+                grid-template-rows: repeat(70, 1fr);
+            }
+            #render ul.grid-size-70 li:nth-child(70n-69) {
+                border-top:none !important;
             }
             #render ul li {
                 border-top:1px dashed #ddd;
@@ -116,7 +122,7 @@
             $renderDiv.find("b").click(function(e) {
                 $renderDiv.hide();
             });
-            var $ul = $("<ul />");
+            var $ul = $("<ul class='grid-size-70'/>");
 
             var listHtml = "";
             for (i in krysskort.lookupData) {
