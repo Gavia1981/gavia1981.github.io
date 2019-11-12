@@ -60,8 +60,7 @@
                 cursor: pointer;
             }
             #render ul {
-                border: 0 solid silver;
-                border-width: 0 0 1px 1px;
+                border: 2px solid silver;
                 padding: 0;
                 margin: 3rem;
                 display: grid;
@@ -74,6 +73,20 @@
             }
             #render ul.grid-size-70 li:nth-child(70n-69) {
                 border-top:none !important;
+            }
+            #render ul.grid-size-70 li:nth-child(n+281) {
+                border-right: none !important;
+            }
+            #render ul li:last-child::after {
+                content: '.';
+                height: 1px;
+                border-bottom: 2px solid silver;
+                display: block;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 50000;
             }
             #render ul li {
                 border-top:1px dashed #ddd;
