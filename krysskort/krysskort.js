@@ -67,7 +67,7 @@
             #render h3 {
                 font-size: 2rem;
                 line-height: 1;
-                margin: 0;
+                margin: 1rem 0 0;
                 border: 2px solid silver;
                 padding: 1rem;
                 border-bottom: none;
@@ -103,7 +103,7 @@
             #render ul {
                 border: 2px solid silver;
                 padding: 0;
-                margin:1rem 0 0;
+                margin:0;
                 display: grid;
                 grid-auto-flow: column;
                 grid-template-rows: repeat(50, 1fr);
