@@ -75,6 +75,23 @@
             #render h3 span {
                 float:right;
             }
+            #render button {
+                border: none;
+                padding: 0.7rem 1.3rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                border-radius: 5px;
+                background-color: #607b94;
+                cursor: pointer;
+                letter-spacing: 1px;
+                color: #fff;
+            }
+            #render button.active {
+                box-shadow: 2px 2px 5px rgba(0,0,0,0.3) inset;
+            }
+            #render button.active:before {
+                content: ' ✓ ';
+            }
             #render .listwrapper { 
                 margin: 3rem auto;
                 padding: 15px;
@@ -86,7 +103,7 @@
             #render ul {
                 border: 2px solid silver;
                 padding: 0;
-                margin:0;
+                margin:1rem 0 0;
                 display: grid;
                 grid-auto-flow: column;
                 grid-template-rows: repeat(50, 1fr);
@@ -147,12 +164,15 @@
                 font-weight:bold;
                 background-color: #eee;
             }
-            #render ul li span {
+            #render ul span {
                 margin-left: auto;
                 font-size: 70%;
                 line-height: 1.7rem;
                 color: #999;
                 font-weight:normal;
+            }
+            #render ul.hide-date span {
+                display:none;
             }
             </style>
             `;
@@ -161,7 +181,7 @@
             $renderDiv.find("b").click(function(e) {
                 krysskort.destroy();
             });
-            var $ul = $("<ul class='grid-size-70'/>");
+            var $ul = $("<ul class='grid-size-70 hide-date'/>");
 
             var listHtml = "";
             for (i in krysskort.lookupData) {
@@ -187,11 +207,16 @@
             }
             
             var $header = $("<h3>" + krysskort.listSettings.areaName + "<span>" + krysskort.listData.length + " arter</span></h3>");
-
+            var $settings = $("<button>Visa datum</button>").click(function() {
+                $ul.toggleClass("hide-date");
+                $(this).toggleClass("active");
+            });
+            
             $(document.body).append($styles);
             $ul.append(listHtml).append(listHtmlBonus);
             $renderDiv.append($ul).find("ul").wrap("<div class='listwrapper'></div>");
             $header.prependTo($renderDiv.find(".listwrapper"));
+            $settings.prependTo($renderDiv.find(".listwrapper"));
         }, 
         destroy: function() {
             $("#render, #renderStyles").remove();
