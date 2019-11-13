@@ -76,10 +76,12 @@
                 float:right;
             }
             #render .listwrapper { 
-                margin: 3rem auto; 
-                width: 1400px; 
-                background-color: #fff; 
-                box-shadow: 0 5px 15px rgba(16,77,107,.1); 
+                margin: 3rem auto;
+                padding: 15px;
+                border-radius: 10px;
+                width: 1400px;
+                background-color: #fff;
+                box-shadow: 0 1px 3px rgba(16,77,107,.2), 0 5px 15px rgba(16,77,107,.1);
             }
             #render ul {
                 border: 2px solid silver;
@@ -88,6 +90,7 @@
                 display: grid;
                 grid-auto-flow: column;
                 grid-template-rows: repeat(50, 1fr);
+                grid-template-columns: repeat(5, 1fr);
                 list-style-type: none;
             }
             #render ul.grid-size-70 {
@@ -119,6 +122,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                display: flex;
             }
             #render ul li:not(.bonus):before {
                 content: ' ';
@@ -144,8 +148,8 @@
                 background-color: #eee;
             }
             #render ul li span {
-                float: right;
-                font-size: 80%;
+                margin-left: auto;
+                font-size: 70%;
                 line-height: 1.7rem;
                 color: #999;
                 font-weight:normal;
