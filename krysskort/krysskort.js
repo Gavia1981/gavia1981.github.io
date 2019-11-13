@@ -3,7 +3,6 @@
         lookupData: [],
         listData: [],
         listSettings: {},
-        renderElements: {},
         loadLookupData: function() {
             var url = "https://cdn.jsdelivr.net/gh/Gavia1981/gavia1981.github.io/krysskort/specieslist.json";
             fetch(url)
@@ -37,8 +36,8 @@
             krysskort.render();
         },
         render: function() {
-            var $styles = krysskort.renderElements.$styles = `
-            <style type="text/css">
+            var $styles = `
+            <style type="text/css" id="renderStyles">
             html {
                 font-size:14px;
             }
@@ -65,10 +64,27 @@
                 box-shadow: 0 5px 7px rgba(0,0,0,0.3);
                 cursor: pointer;
             }
-            #render .listwrapper { margin: 3rem auto; width: 1400px; background-color: #fff; box-shadow: 0 5px 15px rgba(16,77,107,.1); }
+            #render h3 {
+                font-size: 2rem;
+                line-height: 1;
+                margin: 0;
+                border: 2px solid silver;
+                padding: 1rem;
+                border-bottom: none;
+            }
+            #render h3 span {
+                float:right;
+            }
+            #render .listwrapper { 
+                margin: 3rem auto; 
+                width: 1400px; 
+                background-color: #fff; 
+                box-shadow: 0 5px 15px rgba(16,77,107,.1); 
+            }
             #render ul {
                 border: 2px solid silver;
                 padding: 0;
+                margin:0;
                 display: grid;
                 grid-auto-flow: column;
                 grid-template-rows: repeat(50, 1fr);
@@ -137,7 +153,7 @@
             </style>
             `;
 
-            var $renderDiv = krysskort.renderElements.$renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
+            var $renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
             $renderDiv.find("b").click(function(e) {
                 krysskort.destroy();
             });
@@ -166,15 +182,15 @@
                 listHtmlBonus = "<li class='bonus'>BONUSARTER (" + bonusCount + ")</li>" + listHtmlBonus;
             }
             
-            var $header = "<h2>" + krysskort.listSettings.areaName + "</h2>"
+            var $header = $("<h3>" + krysskort.listSettings.areaName + "<span>" + krysskort.listData.length + " arter</span></h3>");
 
             $(document.body).append($styles);
-            $ul.wrap("<div class='listwrapper'></div>").append(listHtml).append(listHtmlBonus);
-            $renderDiv.append($header).append($ul);
+            $ul.append(listHtml).append(listHtmlBonus);
+            $renderDiv.append($ul).find("ul").wrap("<div class='listwrapper'></div>");
+            $header.prependTo($renderDiv.find(".listwrapper"));
         }, 
         destroy: function() {
-            $(krysskort.renderData.$styles).remove();
-            $(krysskort.renderData.$renderDiv).remove();
+            $("#render, #renderStyles").remove();
             krysskort = {};
         },
         init: function() {
