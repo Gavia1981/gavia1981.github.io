@@ -2,7 +2,8 @@
     var krysskort = {
         lookupData: [],
         listData: [],
-        renderData: {},
+        listSettings: {},
+        renderElements: {},
         loadLookupData: function() {
             var url = "https://cdn.jsdelivr.net/gh/Gavia1981/gavia1981.github.io/krysskort/specieslist.json";
             fetch(url)
@@ -17,6 +18,9 @@
               });  
         },
         loadSpeciesList: function() {
+            var settings = $("#specieslistwrapper").data("specieslistsettings");
+            eval('krysskort.listSettings='+settings); 
+            
             let listData = [];
             let sortNr = 0;
             $("#specieslist tbody tr").each(function() {
@@ -33,7 +37,7 @@
             krysskort.render();
         },
         render: function() {
-            var $styles = krysskort.renderData.$styles = `
+            var $styles = krysskort.renderElements.$styles = `
             <style type="text/css">
             html {
                 font-size:14px;
@@ -133,7 +137,7 @@
             </style>
             `;
 
-            var $renderDiv = krysskort.renderData.$renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
+            var $renderDiv = krysskort.renderElements.$renderDiv = $("<div id='render'><b>&times;</b></div>").appendTo(document.body)
             $renderDiv.find("b").click(function(e) {
                 krysskort.destroy();
             });
@@ -161,10 +165,12 @@
             if (bonusCount > 0) {
                 listHtmlBonus = "<li class='bonus'>BONUSARTER (" + bonusCount + ")</li>" + listHtmlBonus;
             }
+            
+            var $header = "<h2>" + krysskort.listSettings.areaName + "</h2>"
 
             $(document.body).append($styles);
             $ul.wrap("<div class='listwrapper'></div>").append(listHtml).append(listHtmlBonus);
-            $renderDiv.append($ul);
+            $renderDiv.append($header).append($ul);
         }, 
         destroy: function() {
             $(krysskort.renderData.$styles).remove();
