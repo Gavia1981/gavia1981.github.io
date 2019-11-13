@@ -164,7 +164,6 @@
             $(document.body).append($styles);
             $ul.append(listHtml).append(listHtmlBonus);
             $renderDiv.append($ul);
-
         }, 
         destroy: function() {
             krysskort.renderData.$styles.remove();
