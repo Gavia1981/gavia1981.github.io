@@ -166,8 +166,8 @@
             $renderDiv.append($ul);
         }, 
         destroy: function() {
-            krysskort.renderData.$styles.remove();
-            krysskort.renderData.$renderDiv.remove();
+            $(krysskort.renderData.$styles).remove();
+            $(krysskort.renderData.$renderDiv).remove();
             krysskort = {};
         },
         init: function() {
