@@ -40,12 +40,13 @@
             }
             body {
                 overflow:hidden;
+                color:#12203b;
             }
             #render {
                 position: fixed; z-index: 100000;
                 top: 0; left: 0; right: 0; bottom: 0,
                 width: 100%; height: 100%;
-                background-color: #fff;
+                background-color: #f3f6f8;
                 overflow: auto;
             }
             #render b {
@@ -60,10 +61,10 @@
                 box-shadow: 0 5px 7px rgba(0,0,0,0.3);
                 cursor: pointer;
             }
+            #render .listwrapper { margin: 3rem auto; width: 1400px; background-color: #fff; box-shadow: 0 5px 15px rgba(16,77,107,.1); }
             #render ul {
                 border: 2px solid silver;
                 padding: 0;
-                margin: 3rem;
                 display: grid;
                 grid-auto-flow: column;
                 grid-template-rows: repeat(50, 1fr);
@@ -162,7 +163,7 @@
             }
 
             $(document.body).append($styles);
-            $ul.append(listHtml).append(listHtmlBonus);
+            $ul.wrap("<div class='listwrapper'></div>").append(listHtml).append(listHtmlBonus);
             $renderDiv.append($ul);
         }, 
         destroy: function() {
