@@ -1,0 +1,30 @@
+[
+    {
+        "firstName":"Grant",
+        "lastName":"Marshall",
+        "company":"Grok",
+        "email":"marshall@yahoo.com",
+        "mobile":"+46238638789"
+    },
+    {
+        "firstName":"Pena",
+        "lastName":"Valdez",
+        "company":"Rotodyne",
+        "email":"valdez@yahoo.com",
+        "mobile":"+46706045578"
+    },
+    {
+        "firstName":"Jessica",
+        "lastName":"Miles",
+        "company":"Senaste",
+        "email":"miles@mail.com",
+        "mobile":"+46946652495"
+    },
+    {
+        "firstName":"Robin",
+        "lastName":"Andersson",
+        "company":"Trippus",
+        "email":"robin.andersson@trippus.com",
+        "mobile":"+46946652495"
+    }
+]
