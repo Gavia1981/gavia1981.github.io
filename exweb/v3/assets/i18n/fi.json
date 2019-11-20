@@ -1,0 +1,81 @@
+{
+    "navigation": {
+        "dashboard": "Kojetaulu",
+        "interestAreas": "Aihealueet",
+        "meetings": "Henkilökohtaiset kokoukset",
+        "leads": "Johtaa",
+        "participants": "Osallistujat"
+    },
+    "validation": {
+        "propIsRequired": "{{fieldName}} vaaditaan",
+        "maxLengthExceched": "Suurin pituus ({{maxLength}}) on ylitetty",
+        "noDuplicates": "Kopiot eivät ole sallittuja"
+    },
+    "login": {
+        "trippusWelcome": "Tervetuloa Trippus",
+        "exhibitorPortal": "Portaali"
+    },
+    "shared": {
+        "no": "Ei",
+        "yes": "Kyllä",
+        "login": "Kirjautuminen",
+        "username": "Käyttäjätunnus",
+        "password": "Salasana",
+        "name": "Nimi",
+        "company": "Yritys",
+        "person": "Henkilö",
+        "contact": "Yhteyshenkilö",
+        "mobile": "Mobile",
+        "email": "Sähköposti",
+        "comments": "Kommentit",
+        "scanned": "Skannattu",
+        "personnel": "Henkilöstö",
+        "visitors": "Vierailijat",
+        "interestAreas": "Aihealueet",
+        "selectAllRows": "Valitse kaikki rivit",
+        "selectRow": "Valitse rivi",
+        "timeslots": "Aikavälit",
+        "showingNumberOfEntries": "Näytetään <span>{{count}}</span> tai <span>{{totalCount}}</span> merkinnät"
+    },
+    "dashboard": {
+        "header": "Hallintapaneeli",
+        "description": "Tietoja johtajistasi ja osallistujistasi. Voit myös kutsua henkilökuntaa ja vieraita.",
+        "leadCount": "Johtojen lukumäärä",
+        "visitorCount": "Varatut vierailijat",
+        "invite": "Kutsu",
+        "notConnected": "Ei yhteyttä <br> <small> Yhdistä tämä luokka </small>",
+        "imageAltText": "Animoitu kuva, joka kuvaa esimerkkiä rekisteröinnistä",
+        "copyLink": "Kopioi linkki",
+        "sendEmail": "Lähetä sähköpostia",
+        "addPersonnel": "Lisää henkilöstö"
+    },
+    "interestAreas": {
+        "header": "Kiinnostavat alueet",
+        "description": "Liitä vierailijat kiinnostavaan alueeseen.",
+        "searchPlaceholder": "Anna aihepiiri",
+        "addAreaButton": "Lisää alue",
+        "emptyListMessage": "Ei kiinnostuksen kohteita",
+        "editCurrent": "Muokkaa nykyistä kiinnostavaa aluetta",
+        "deleteCurrent": "Poista nykyinen kiinnostava alue"
+    },
+    "meetings": {
+        "header": "Henkilökohtainen kokous",
+        "description": "Katsaus vahvistettuihin kokouksiin.",
+        "searchPlaceholder": "Etsi kokous",
+        "cancelMeetingsButton": "Peruuta kokoukset",
+        "emptyListMessage": "Ei kokouksia"
+    },
+    "leads": {
+        "header": "Johtaa",
+        "description": "Kaikki näyttelysi skannauksen johtosi.",
+        "searchPlaceholder": "Etsi lyijyä",
+        "downloadButton": "Lataa Excel",
+        "cardsView": "Kortit-näkymä",
+        "tableView": "Taulukonäkymä"
+    },
+    "participants": {
+        "header": "Sinun osallistujat",
+        "description": "Valitse osaston henkilökunta tulostamaan heidän merkintänsä. Voit nähdä myös rekisteröityneet vieraasi.",
+        "searchPlaceholder": "Etsi osallistujia"
+    }
+}

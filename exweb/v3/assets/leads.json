@@ -1,0 +1,62 @@
+[
+    {
+        "firstName":"Grant",
+        "lastName":"Marshall",
+        "company":"Grok",
+        "email":"marshall@yahoo.com",
+        "mobile":"+46238638789",
+        "scanned": "2019-11-14 10:53",
+        "comment": "Hej hej hej!",
+        "areaOfInterest": ["Volvo V60", "Volvo XC90"]
+    },
+    {
+        "firstName":"Pena",
+        "lastName":"Valdez",
+        "company":"Rotodyne",
+        "email":"valdez@yahoo.com",
+        "mobile":"+46706045578",
+        "scanned": "2019-11-14 10:37",
+        "comment": "",
+        "areaOfInterest": ["Volvo 740", "Leasing"]
+    },
+    {
+        "firstName":"Jessica",
+        "lastName":"Miles",
+        "company":"Senaste",
+        "email":"miles@mail.com",
+        "mobile":"+46946652495",
+        "scanned": "2019-11-14 10:26",
+        "comment": "Testar att skriva en hyfsat lång kommentar här så att man får se hur mycket som får plats i den här delen av sidan som ska kunna innehålla en rätt lång, eller tom väldigt lång, kommentar som är skriven av användaren.",
+        "areaOfInterest": ["Volvo XC60", "Volvo 240", "Volvo cars"]
+    },
+    {
+        "firstName":"Kerri",
+        "lastName":"Barber",
+        "company":"Flexigen",
+        "email":"barber@gmail.com",
+        "mobile":"+46462551614",
+        "scanned": "2019-11-14 10:23",
+        "comment": "",
+        "areaOfInterest": ["Volvo on call", "Leasing"]
+    },
+    {
+        "firstName":"Natasha",
+        "lastName":"Gamble",
+        "company":"Radiantix",
+        "email":"gamble@outlook.com",
+        "mobile":"+46720742753",
+        "scanned": "2019-11-14 10:21",
+        "comment": "Visits office 24/3",
+        "areaOfInterest": ["Leasing", "Volvo XC60", "Volvo 240", "Volvo 740"]
+    },
+    {
+        "firstName":"White",
+        "lastName":"Castaneda",
+        "company":"Corporana",
+        "email":"castadena@mail.com",
+        "mobile":"+464125675",
+        "scanned": "2019-11-14 10:14",
+        "comment": "Technically interested",
+        "areaOfInterest": ["Volvo 740"]
+    }
+]
