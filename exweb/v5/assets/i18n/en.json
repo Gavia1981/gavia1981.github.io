@@ -1,0 +1,106 @@
+{
+    "navigation": {
+        "dashboard": "Dashboard",
+        "interestAreas": "Areas of interests",
+        "meetings": "One-to-one meetings",
+        "leads": "Leads",
+        "participants": "Your participants",
+        "logout": "Log out"
+    },
+    "validation": {
+        "propIsRequired": "{{fieldName}} is required",
+        "maxLengthExceeded": "Max length ({{maxLength}}) is exceeded",
+        "noDuplicates": "Duplicates are not allowed",
+        "emailInvalid": "Invalid email address"
+    },
+    "login": {
+        "header": "Login",
+        "trippusWelcome" : "Welcome to Trippus",
+        "exhibitorPortal": "Exhibitor portal",
+        "lostPasswordLink": "Forgot password?"
+    },
+    "resetPassword": {
+        "header": "Reset password",
+        "description" : "Please enter your email.",
+        "resetPasswordButton": "Send email",
+        "linkText": "Return to Login",
+        "confirmationText": "If an account exists for <strong class='rp-email'>{{ email }}</strong>, you'll receive an email with a reset password link.",
+        "checkEmail": "Check your inbox and follow the reset password link."
+    },
+    "pageNotFound": {
+        "header": "Page not found!",
+        "description": "Please check the webaddress",
+        "linkText": "Go to Login"
+    },
+    "shared": {
+        "no": "No",
+        "yes": "Yes",
+        "login": "Login",
+        "name": "Name",
+        "username": "Username",
+        "password": "Password",
+        "company": "Company",
+        "person": "Person",
+        "contact": "Contact",
+        "mobile": "Mobile",
+        "email": "Email",
+        "comments": "Comments",
+        "scanned": "Scanned",
+        "personnel": "Personnel",
+        "visitors": "Visitors",
+        "interestAreas": "Areas of interests",
+        "selectAllRows": "Select all rows",
+        "selectRow": "Select row",
+        "timeslots": "Timeslots",
+        "showingNumberOfEntries": "Showing <span>{{count}}</span> of <span>{{totalCount}}</span> entries",
+        "toggleMenu": "Show/hide menu"
+    },
+    "dashboard": {
+        "header": "Dashboard",
+        "description": "Insights of your leads and participants. You can also invite personnel and visitors.",
+        "leadCount": "Number of leads",
+        "visitorCount": "Booked visitors",
+        "invite": "Invite",
+        "notConnected": "Not available<br><small>Please contact the event organiser</small>",
+        "imageAltText": "Animated picture showing an example of a registration",
+        "copyLink": "Copy link",
+        "sendEmail": "Send email",
+        "addPersonnel": "Add personnel",
+        "showVideo": "Show instruction video",
+        "hideVideo": "Hide instruction video"
+    },
+    "interestAreas": {
+        "header": "Areas of interest",
+        "description": "Associate your visitors with the area they are interested in.",
+        "searchPlaceholder": "Enter an area of interests",
+        "addAreaButton": "Add area",
+        "emptyListMessage": "No areas of interests",
+        "editCurrent": "Edit current area of interest",
+        "deleteCurrent": "Delete current area of interest"
+    },
+    "meetings": {
+        "header": "One-to-one meetings",
+        "description": "An overview of your confirmed meetings.",
+        "searchPlaceholder": "Search for meeting",
+        "cancelMeetingsButton": "Cancel meetings",
+        "emptyListMessage": "No meetings"
+    },
+    "leads": {
+        "header": "Leads",
+        "description": "All of your leads from the exhibition scanning.",
+        "searchPlaceholder": "Search for lead",
+        "downloadButton": "Download Excel",
+        "cardsView": "Cards view",
+        "tableView": "Table view",
+        "emptyListMessage": "The list is empty"
+    },
+    "participants": {
+        "header": "Your participants",
+        "description": "Select your stand personnel to print their badge. You can also see your registered guests.",
+        "searchPlaceholder": "Search for participants"
+    },
+    "selectEvent": {
+        "header": "Choose event",
+        "description": "Select event from the list below."
+    }
+}
