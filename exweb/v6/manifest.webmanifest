@@ -4,8 +4,8 @@
     "theme_color": "#37526d",
     "background_color": "#37526d",
     "display": "standalone",
-    "scope": "/",
-    "start_url": "/",
+    "scope": "/exweb/v6/",
+    "start_url": "/exweb/v6/",
     "icons": [
         {
             "src": "assets/icons/icon-72x72.png",
