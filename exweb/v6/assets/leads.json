@@ -1,0 +1,142 @@
+{
+    "page": 1,
+    "pageSize": 250,
+    "totalRecords": 6,
+    "totalPages": 1,
+    "data": [
+        {
+            "leadId": "1",
+            "person": {
+                "name": "Grant Marshall",
+                "company": "Grok",
+                "email": "marshall@yahoo.com",
+                "mobile": "+46238638789"
+            },
+            "createdDate": "2019-11-14 10:53",
+            "comment": "Hej hej hej!",
+            "interestAreas": [
+                {
+                    "interestAreaId": "1",
+                    "name": "Volvo V60"
+                },
+                {
+                    "interestAreaId": "2",
+                    "name": "Volvo XC90"
+                }
+            ]
+        },
+        {
+            "leadId": "2",
+            "person": {
+                "name": "Pena Valdez",
+                "company": "Rotodyne",
+                "email": "valdez@yahoo.com",
+                "mobile": "+46706045578"
+            },
+            "createdDate": "2019-11-14 10:37",
+            "comment": "",
+            "interestAreas": [
+                {
+                    "interestAreaId": "1",
+                    "name": "Volvo 740"
+                },
+                {
+                    "interestAreaId": "2",
+                    "name": "Leasing"
+                }
+            ]
+        },
+        {
+            "leadId": "3",
+            "person": {
+                "name": "Jessica Miles",
+                "company": "Senaste",
+                "email": "miles@mail.com",
+                "mobile": "+46946652495"
+            },
+            "createdDate": "2019-11-14 10:26",
+            "comment": "Testar att skriva en hyfsat lång kommentar här så att man får se hur mycket som får plats i den här delen av sidan som ska kunna innehålla en rätt lång, eller tom väldigt lång, kommentar som är skriven av användaren.",
+            "interestAreas": [
+                {
+                    "interestAreaId": "1",
+                    "name": "Volvo XC60"
+                },
+                {
+                    "interestAreaId": "2",
+                    "name": "Volvo 240"
+                },
+                {
+                    "interestAreaId": "3",
+                    "name": "Volvo cars"
+                }
+            ]
+        },
+        {
+            "leadId": "4",
+            "person": {
+                "name": "Kerri Barber",
+                "company": "Flexigen",
+                "email": "barber@gmail.com",
+                "mobile": "+46462551614"
+            },
+            "createdDate": "2019-11-14 10:23",
+            "comment": "",
+            "interestAreas": [
+                {
+                    "interestAreaId": "1",
+                    "name": "Volvo on call"
+                },
+                {
+                    "interestAreaId": "2",
+                    "name": "Leasing"
+                }
+            ]
+        },
+        {
+            "leadId": "5",
+            "person": {
+                "name": "Natasha Gamble",
+                "company": "Radiantix",
+                "email": "gamble@outlook.com",
+                "mobile": "+46720742753"
+            },
+            "createdDate": "2019-11-14 10:21",
+            "comment": "Visits office 24/3",
+            "interestAreas": [
+                {
+                    "interestAreaId": "1",
+                    "name": "Leasing"
+                },
+                {
+                    "interestAreaId": "2",
+                    "name": "Volvo XC60"
+                },
+                {
+                    "interestAreaId": "3",
+                    "name": "Volvo 240"
+                },
+                {
+                    "interestAreaId": "4",
+                    "name": "Volvo 740"
+                }
+            ]
+        },
+        {
+            "leadId": "6",
+            "person": {
+                "name": "White Castaneda",
+                "company": "Corporana",
+                "email": "castadena@mail.com",
+                "mobile": "+464125675"
+            },
+            "createdDate": "2019-11-14 10:14",
+            "comment": "Technically interested",
+            "interestAreas": [
+                {
+                    "interestAreaId": "3",
+                    "name": "Volvo 740"
+                }
+            ]
+        }
+    ]
+}

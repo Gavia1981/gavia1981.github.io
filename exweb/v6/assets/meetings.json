@@ -1,0 +1,59 @@
+{
+    "page": 1,
+    "pageSize": 250,
+    "totalRecords": 5,
+    "totalPages": 1,
+    "data": 
+            [
+                {
+                    "id": "1",
+                    "timeSlot": "08:00-08:20",
+                    "participant" : {
+                        "name":"Grant Marshall",
+                        "company":"Grok",
+                        "email":"marshall@yahoo.com",
+                        "mobile":"+46238638789"
+                    }
+                },
+                {
+                    "id": "2",
+                    "timeSlot": "08:20-08:40",
+                    "participant" : {
+                        "name":"Pena Valdez",
+                        "company":"Rotodyne",
+                        "email":"valdez@yahoo.com",
+                        "mobile":"+46706045578"
+                    }
+                },
+                {
+                    "id": "3",
+                    "timeSlot": "08:40-09:00",
+                    "participant" : {
+                        "name":"Jessica Miles",
+                        "company":"Senaste",
+                        "email":"miles@mail.com",
+                        "mobile":"+46946652495"
+                    }
+                },
+                {
+                    "id": "4",
+                    "timeSlot": "09:00-09:20",
+                    "participant" : {
+                        "name":"Robin Andersson",
+                        "company":"Trippus",
+                        "email":"robin.andersson@trippus.com",
+                        "mobile":"+46946652495"
+                    }
+                },
+                {
+                    "id": "5",
+                    "timeSlot": "09:20-09:40",
+                    "participant" : {
+                        "name":"Armen Abrami",
+                        "company":"Trippus",
+                        "email":"armen@trippus.com",
+                        "mobile":"+46946652495"
+                    }
+                }
+            ]
+}
