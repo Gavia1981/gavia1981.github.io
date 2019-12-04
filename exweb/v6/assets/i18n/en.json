@@ -75,7 +75,9 @@
         "sendEmail": "Send email",
         "addPersonnel": "Add personnel",
         "showVideo": "Show instruction video",
-        "hideVideo": "Hide instruction video"
+        "hideVideo": "Hide instruction video",
+        "exhibitorAppHeader": "Exhibitor app",
+        "userAccountSettings": "User account for exhibitor app:"
     },
     "interestAreas": {
         "header": "Areas of interest",
@@ -104,7 +106,7 @@
     },
     "participants": {
         "header": "Your participants",
-        "description": "Select your stand personnel to print their badge. You can also see your registered guests.",
+        "description": "Select your stand personnel to print their badge. You can also see your registered visitors.",
         "searchPlaceholder": "Search for participants"
     },
     "selectEvent": {

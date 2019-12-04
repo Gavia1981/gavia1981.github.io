@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+@angular/animations
+MIT
+
 @angular/common
 MIT
 
@@ -36,6 +39,9 @@ MIT
 MIT
 
 @angular/router
+MIT
+
+@angular/service-worker
 MIT
 
 @fortawesome/fontawesome-free
