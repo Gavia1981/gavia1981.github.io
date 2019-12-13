@@ -1,0 +1,103 @@
+{
+    "navigation": {
+        "dashboard": "Dashboard",
+        "interestAreas": "Areas of interests",
+        "meetings": "One-to-one meetings",
+        "leads": "Leads",
+        "participants": "Your participants"
+    },
+    "validation": {
+        "propIsRequired": "{{fieldName}} is required",
+        "maxLengthExceeded": "Max length ({{maxLength}}) is exceeded",
+        "noDuplicates": "Duplicates are not allowed",
+        "emailInvalid": "Invalid email address"
+    },
+    "login": {
+        "header": "Logga in",
+        "trippusWelcome" : "Välkommen till Trippus",
+        "exhibitorPortal": "Utställarportal",
+        "lostPasswordLink": "Glömt lösenord?"
+    },
+    "resetPassword": {
+        "header": "Reset password",
+        "description" : "Please enter your email.",
+        "resetPasswordButton": "Send email",
+        "linkText": "Return to Login",
+        "confirmationText": "If an account exists for <strong class='rp-email'>{{ email }}</strong>, you'll receive an email with a reset password link.",
+        "checkEmail": "Check your inbox and follow the reset password link."
+    },
+    "pageNotFound": {
+        "header": "Sidan finns ej!",
+        "description": "Kontrollera webbadressen",
+        "linkText": "Gå till login"
+    },
+    "shared": {
+        "no": "Nej",
+        "yes": "Ja",
+        "login": "Logga in",
+        "name": "Namn",
+        "username": "Användarnamn",
+        "password": "Lösenord",
+        "company": "Företag",
+        "person": "Person",
+        "contact": "Kontakt",
+        "mobile": "Mobil",
+        "email": "Epost",
+        "comments": "Kommentar",
+        "scanned": "Skannad",
+        "personnel": "Personal",
+        "visitors": "Besökare",
+        "interestAreas": "Intresseområden",
+        "selectAllRows": "Markera alla rader",
+        "selectRow": "Markera rad",
+        "timeslots": "Timeslots",
+        "showingNumberOfEntries": "Visar <span>{{count}}</span> av <span>{{totalCount}}</span>",
+        "toggleMenu": "Visa/Dölj meny"
+    },
+    "dashboard": {
+        "header": "Dashboard",
+        "description": "Insights of your leads and participants. You can also invite personnel and visitors.",
+        "leadCount": "Number of leads",
+        "visitorCount": "Booked visitors",
+        "invite": "Invite",
+        "notConnected": "Not connected<br><small>Please connect this category</small>",
+        "imageAltText": "Animated picture showing an example of a registration",
+        "copyLink": "Copy link",
+        "sendEmail": "Send email",
+        "addPersonnel": "Add personnel"
+    },
+    "interestAreas": {
+        "header": "Intresseområden",
+        "description": "Associate your visitors with the area they are interested in.",
+        "searchPlaceholder": "Ange namn på intresseområde",
+        "addAreaButton": "Lägg till",
+        "emptyListMessage": "Intresseområden saknas",
+        "editCurrent": "Ändra detta intresseområde",
+        "deleteCurrent": "Radera detta intresseområde"
+    },
+    "meetings": {
+        "header": "Möten",
+        "description": "An overview of your confirmed meetings.",
+        "searchPlaceholder": "Search for meeting",
+        "cancelMeetingsButton": "Cancel meetings",
+        "emptyListMessage": "No meetings"
+    },
+    "leads": {
+        "header": "Leads",
+        "description": "All of your leads from the exhibition scanning.",
+        "searchPlaceholder": "Search for lead",
+        "downloadButton": "Download Excel",
+        "cardsView": "Cards view",
+        "tableView": "Table view",
+        "emptyListMessage": "The list is empty"
+    },
+    "participants": {
+        "header": "Dina deltagare",
+        "description": "Select your stand personnel to print their badge. You can also see your registered guests.",
+        "searchPlaceholder": "Sök efter deltagare"
+    },
+    "selectEvent": {
+        "header": "Välj event",
+        "description": "Välj event från listan nedan."
+    }
+}
